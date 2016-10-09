@@ -2,7 +2,7 @@
 
 
 
-Configuration::Configuration(double utilisation, int task_number, string output_filename)
+Configuration::Configuration(const double utilisation, const int task_number, const string output_filename)
 {
     this->utilisation = utilisation;
     this->task_number = task_number;
@@ -22,4 +22,15 @@ int Configuration::getTask_number() const
 string Configuration::getOutput_filename() const
 {
     return output_filename;
+}
+
+ostream &operator<<(ostream &output, const Configuration &c)
+{
+    output.precision(5);
+
+    output << "Input:" << endl << "Task number = " << c.getTask_number()
+           << endl << "Utilisation = " << c.getUtilisation()
+           << endl <<"Output filename = " << c.getOutput_filename() << endl << endl;
+
+    return output;
 }

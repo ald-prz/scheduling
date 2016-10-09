@@ -1,15 +1,14 @@
 #ifndef INPUTRECOGNIZERABSTRACT_H
 #define INPUTRECOGNIZERABSTRACT_H
 
-#include "all.h"
+#include "configuration.h"
 
 using namespace std;
-
-class Configuration;
 
 class InputRecognizerAbstract
 {
 public:
+
     virtual Configuration *Recognize(int argc, char *argv[]) = 0;
 };
 
