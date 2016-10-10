@@ -14,9 +14,9 @@ public:
 
     double getUtilisation() const;
 
-    int getTask_number() const;
+    int getTaskNumber() const;
 
-    string getOutput_filename() const;
+    string getOutputFilename() const;
 
     friend ostream &operator<<(ostream &output, const Configuration &C);
 

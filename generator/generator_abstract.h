@@ -4,6 +4,7 @@
 #include <vector>
 #include <stdlib.h>
 #include <memory>
+#include <time.h>
 
 #include "configuration.h"
 #include "task.h"

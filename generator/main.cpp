@@ -22,10 +22,10 @@ int main(int argc, char *argv[])
     Generator *generator = new Generator(configuration);
     vector<Task *> tasks = generator->Generate();
 
-    OutputWriter *outputWriter = new OutputWriter(configuration->getOutput_filename(), tasks);
+    OutputWriter *outputWriter = new OutputWriter(configuration->getOutputFilename(), tasks);
     outputWriter->Write();
 
-    cout << "Written to " << configuration->getOutput_filename() << endl;
+    cout << "Written to " << configuration->getOutputFilename() << endl;
 
     tasks.clear();
 

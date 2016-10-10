@@ -6,7 +6,9 @@ GeneratorAbstract::GeneratorAbstract(Configuration *configuration)
 {
     this->configuration = configuration;
 
-    for (int i = 0; i < this->configuration->getTask_number(); i++)
+    srand(time(NULL));
+
+    for (int i = 0; i < this->configuration->getTaskNumber(); i++)
         this->result.push_back(new Task());
 }
 
