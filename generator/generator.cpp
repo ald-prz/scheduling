@@ -5,7 +5,6 @@ Generator::Generator(Configuration *configuration) : GeneratorAbstract::Generato
 {
 }
 
-
 vector<Task *> Generator::Generate()
 {
     double min_offset = 0.0, max_offset = 100.0;

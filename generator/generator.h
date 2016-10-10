@@ -5,8 +5,6 @@
 
 #include "generator_abstract.h"
 
-using namespace std;
-
 class Generator : public GeneratorAbstract
 {
 public:

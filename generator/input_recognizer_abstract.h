@@ -3,8 +3,6 @@
 
 #include "configuration.h"
 
-using namespace std;
-
 class InputRecognizerAbstract
 {
 public:

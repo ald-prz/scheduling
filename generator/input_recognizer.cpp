@@ -1,7 +1,5 @@
 #include "input_recognizer.h"
 
-
-
 Configuration* InputRecognizer::Recognize(int argc, char *argv[])
 {
     Configuration *result;
