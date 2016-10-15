@@ -1,15 +1,14 @@
 #include "all.h"
 
 
-
 int main(int argc, char *argv[])
 {
-    InputRecognizer *recognizer = new InputRecognizer();
-    Configuration *configuration;
+    InputRecognizer recognizer;
+    Configuration *configuration = nullptr;
 
     try
     {
-        configuration = recognizer->Recognize(argc, argv);
+        configuration = recognizer.Recognize(argc, argv);
     }
     catch (ExceptionInput eInput)
     {
@@ -19,11 +18,11 @@ int main(int argc, char *argv[])
 
     cout << *configuration;
 
-    Generator *generator = new Generator(configuration);
-    vector<Task *> tasks = generator->Generate();
+    Generator generator(configuration);
+    vector<Task *> tasks = generator.Generate();
 
-    OutputWriter *outputWriter = new OutputWriter(configuration->getOutputFilename(), tasks);
-    outputWriter->Write();
+    OutputWriter outputWriter(configuration->getOutputFilename(), tasks);
+    outputWriter.Write();
 
     cout << "Written to " << configuration->getOutputFilename() << endl;
 
@@ -32,9 +31,6 @@ int main(int argc, char *argv[])
     cout << "Finished" << endl;
 
     delete configuration;
-    delete generator;
-    delete outputWriter;
-    delete recognizer;
 
     return 0;
 }
