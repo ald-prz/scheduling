@@ -5,13 +5,13 @@
 
 Task::Task()
 {
-    this->offset = 0.0;
-    this->period = 0.0;
-    this->deadline = 0.0;;
-    this->wcet = 0.0;
+    this->offset = 0;
+    this->period = 0;
+    this->deadline = 0;;
+    this->wcet = 0;
 }
 
-Task::Task(double offset, double period, double deadline, double wcet)
+Task::Task(int offset, int period, int deadline, int wcet)
 {
     this->offset = offset;
     this->period = period;
@@ -19,42 +19,42 @@ Task::Task(double offset, double period, double deadline, double wcet)
     this->wcet = wcet;
 }
 
-double Task::getOffset() const
+int Task::getOffset() const
 {
     return offset;
 }
 
-void Task::setOffset(double value)
+void Task::setOffset(int value)
 {
     offset = value;
 }
 
-double Task::getPeriod() const
+int Task::getPeriod() const
 {
     return period;
 }
 
-void Task::setPeriod(double value)
+void Task::setPeriod(int value)
 {
     period = value;
 }
 
-double Task::getDeadline() const
+int Task::getDeadline() const
 {
     return deadline;
 }
 
-void Task::setDeadline(double value)
+void Task::setDeadline(int value)
 {
     deadline = value;
 }
 
-double Task::getWcet() const
+int Task::getWcet() const
 {
     return wcet;
 }
 
-void Task::setWcet(double value)
+void Task::setWcet(int value)
 {
     wcet = value;
 }

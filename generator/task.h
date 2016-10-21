@@ -6,29 +6,29 @@ class Task
 public:
 
     Task();
-    Task(double offset, double period, double deadline, double wcet);
+    Task(int offset, int period, int deadline, int wcet);
 
-    double getOffset() const;
-    void setOffset(double value);
+    int getOffset() const;
+    void setOffset(int value);
 
-    double getPeriod() const;
-    void setPeriod(double value);
+    int getPeriod() const;
+    void setPeriod(int value);
 
-    double getDeadline() const;
-    void setDeadline(double value);
+    int getDeadline() const;
+    void setDeadline(int value);
 
-    double getWcet() const;
-    void setWcet(double value);
+    int getWcet() const;
+    void setWcet(int value);
 
 private:
 
-    double offset;
+    int offset;
 
-    double period;
+    int period;
 
-    double deadline;
+    int deadline;
 
-    double wcet;
+    int wcet;
 };
 
 #endif // TASK_H
