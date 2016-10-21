@@ -9,7 +9,7 @@ vector<Task *> Generator::Generate()
 {
     double min_offset = 0.0, max_offset = 100.0;
     double deviation = 0.5;
-    double min_period = 50.0, max_period = 100.0;
+    double min_period = 400.0, max_period = 600.0;
 
     // generating offsets
 
