@@ -39,8 +39,17 @@ public:
                 if (action == 1)   // job start
                 {
                     tasks.at(index)->Left = tasks.at(index)->getWcet();
-                    chain->setEvent(index * 3 + action, chain->getTime() + tasks.at(index)->getPeriod());
+
                     reassignTasks(tasks);
+
+                    chain->setEvent(index * 3 + 1, chain->getTime() + tasks.at(index)->getPeriod());
+
+                    if (tasks.at(index)->IsWorking)
+                        chain->setEvent(index * 3 + 2, chain->getTime() + tasks.at(index)->getWcet());
+                    else
+                        chain->setEvent(index * 3 + 2, -1);
+
+                    chain->setEvent(index * 3 + 3, chain->getTime() + tasks.at(index)->getDeadline());
                 }
 
                 if (action == 2)   // job end
@@ -68,6 +77,22 @@ protected:
             if (tasks.at(i)->Left > 0)
                 working.push_back(tasks.at(i));
 
+
+        for (int i = 0; i < tasks_sorted.size(); i++) // unassign all tasks
+            tasks_sorted.at(i)->IsWorking = false;
+
+        int processors_free = this->processor_number; // reassign n most priorited tasks
+        for (int i = 0; i < tasks_sorted.size(); i++)
+            if (processors_free > 0)
+            {
+                if (tasks_sorted.at(i)->Left > 0)
+                {
+                    tasks_sorted.at(i)->IsWorking = true;
+                    processors_free--;
+                }
+            }
+            else
+                break;
     }
 
     FutureEventChain *chain;
