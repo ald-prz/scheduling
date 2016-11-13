@@ -9,6 +9,8 @@ Task::Task()
     this->period = 0;
     this->deadline = 0;;
     this->wcet = 0;
+    this->Left = 0;
+    this->IsWorking = false;
 }
 
 Task::Task(int offset, int period, int deadline, int wcet)

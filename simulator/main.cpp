@@ -20,8 +20,8 @@ int main(int argc, char *argv[])
     char *task_file_address = argv[2];
     int processor_number = atoi(argv[3]);
 
-    TaskReader *task_loader = new TaskReader(task_file_address);
-    vector<Task> tasks = task_loader->Read();
+    TaskReader task_loader(task_file_address);
+    vector<Task*> tasks = task_loader.Read();
 
     SimulatorAbstract *simulator;
 

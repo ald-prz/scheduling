@@ -17,12 +17,13 @@ public:
         this->task_file_addess = task_file_addess;
     }
 
-    vector<Task> Read()
+    vector<Task*> Read()
     {
         ifstream myfile;
         myfile.open(task_file_addess);
-        vector<Task> *result = new vector<Task>();
+        vector<Task*> result;
 
+        int id = 0;
         for (char *buffer = new char[20]; !myfile.eof();)
         {
             Task* task = new Task();
@@ -48,12 +49,14 @@ public:
             myfile >> buffer;
             task->setWcet(atoi(buffer));
 
-            result->push_back(*task);
+            task->Id = id++;
+
+            result.push_back(task);
         }
 
         myfile.close();
 
-        return *result;
+        return result;
     }
 
 protected:

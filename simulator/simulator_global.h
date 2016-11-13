@@ -8,14 +8,14 @@ class SimulatorGlobal : public SimulatorAbstract
 {
 public:
 
-    SimulatorGlobal(vector<Task> tasks, int processor_number) : SimulatorAbstract(tasks, processor_number)
+    SimulatorGlobal(vector<Task*> tasks, int processor_number) : SimulatorAbstract(tasks, processor_number)
     {
         vector<int> event;
         event.push_back(max_offset + 2 * hyper_period);
 
         for (int i = 0; i < tasks.size(); i++)
         {
-            event.push_back(tasks.at(i).getOffset());
+            event.push_back(tasks.at(i)->getOffset());
             event.push_back(-1);
             event.push_back(-1);
         }
@@ -25,8 +25,6 @@ public:
 
     virtual void Simulate() override
     {
-        vector<Task> activeTasks;
-
         while (true)
         {
             int event = chain->DetermineNextEvent();
@@ -40,8 +38,9 @@ public:
 
                 if (action == 1)   // job start
                 {
-                    activeTasks.push_back(tasks.at(index));
-                    chain->setEvent(index * 3 + action, chain->getTime() + tasks.at(index).getPeriod());
+                    tasks.at(index)->Left = tasks.at(index)->getWcet();
+                    chain->setEvent(index * 3 + action, chain->getTime() + tasks.at(index)->getPeriod());
+                    reassignTasks(tasks);
                 }
 
                 if (action == 2)   // job end
@@ -58,6 +57,18 @@ public:
     }
 
 protected:
+
+    // input: the current list of tasks
+    // output: affects the chain
+    void reassignTasks(vector<Task*> tasks)
+    {
+        vector<Task*> working;
+
+        for (int i = 0; i < tasks.size(); i++)  // select awaiting jobs
+            if (tasks.at(i)->Left > 0)
+                working.push_back(tasks.at(i));
+
+    }
 
     FutureEventChain *chain;
 };
