@@ -18,11 +18,19 @@ public:
         this->processor_number = processor_number;
 
         vector<int> periods;
-
+        vector<int> offsets;
         for (int i = 0; i < tasks.size(); i++)
+        {
             periods.push_back(tasks[i].getPeriod());
+            offsets.push_back(tasks[i].getOffset());
+        }
 
-        this->simulation_period = LeastCommonMultiple::Calculate(periods);
+        this->hyper_period = LeastCommonMultiple::Calculate(periods);
+
+        this->max_offset = offsets.at(0);
+        for (int i = 1; i < offsets.size(); i++)
+            if (max_offset < offsets.at(i))
+                max_offset = offsets.at(i);
     }
 
     virtual void Simulate() = 0;
@@ -33,7 +41,9 @@ protected:
 
     int processor_number;
 
-    int simulation_period;
+    int hyper_period;
+
+    int max_offset;
 };
 
 #endif // SIMULATOR_ABSTRACT_H
