@@ -3,9 +3,13 @@
 
 #include <simulator_abstract.h>
 
-class SimulatorGlobal : SimulatorAbstract
+class SimulatorGlobal : public SimulatorAbstract
 {
 public:
+
+    SimulatorGlobal(vector<Task> tasks, int processor_number) : SimulatorAbstract(tasks, processor_number)
+    {
+    }
 
     virtual void Simulate() override
     {

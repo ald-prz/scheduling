@@ -2,12 +2,15 @@
 #include <string.h>
 #include <vector>
 
+
 #include "simulator_abstract.h"
 #include "simulator_global.h"
 #include "future_event_chain.h"
 #include "task_loader.h"
+#include "least_common_multiple.h"
 
 using namespace std;
+
 
 int main(int argc, char *argv[])
 {
@@ -20,12 +23,12 @@ int main(int argc, char *argv[])
     TaskReader *task_loader = new TaskReader(task_file_address);
     vector<Task> tasks = task_loader->Read();
 
-    vector<int> v;
-    v.push_back(3);
-    v.push_back(2);
-    v.push_back(4);
-    FutureEventChain *chain = new FutureEventChain(v);
-    int a = chain->DetermineNextEvent();
+    SimulatorAbstract *simulator;
+
+    if (is_global)
+        simulator = new SimulatorGlobal(tasks, processor_number);
+
+    simulator->Simulate();
 
     cout << "finished" << endl;
 

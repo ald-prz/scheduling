@@ -11,4 +11,5 @@ HEADERS += \
     task_loader.h \
     simulator_abstract.h \
     simulator_global.h \
-    future_event_chain.h
+    future_event_chain.h \
+    least_common_multiple.h
