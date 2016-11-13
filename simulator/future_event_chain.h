@@ -54,6 +54,16 @@ public:
         return time;
     }
 
+    int getEvent(int index)
+    {
+        return event.at(index);
+    }
+
+    int setEvent(int index, int time)
+    {
+        event.at(index) = time;
+    }
+
 protected:
 
     vector<int> event;
