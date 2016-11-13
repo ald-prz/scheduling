@@ -8,4 +8,7 @@ SOURCES += main.cpp \
 
 HEADERS += \
     task.h \
-    task_loader.h
+    task_loader.h \
+    simulator_abstract.h \
+    simulator_global.h \
+    future_event_chain.h
