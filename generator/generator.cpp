@@ -9,7 +9,7 @@ vector<Task *> Generator::Generate()
 {
     double min_offset = 0.0, max_offset = 100.0;
     double deviation = 0.5;
-    double period = 500;
+    double period = 1000;
 
     // generating offsets
 
@@ -19,17 +19,17 @@ vector<Task *> Generator::Generate()
     // generating utils (array of utilisation of every task)
 
     vector<double> utils;
-    double left = this->configuration->getUtilisation();
+    double utilisation_left = this->configuration->getUtilisation();
     double n = (double) this->configuration->getTaskNumber();
 
     for (int i = 0; i < this->configuration->getTaskNumber() - 1; i++)
     {
-        double next = random(left / n * (1.0 - deviation), left / n * (1.0 + deviation));
-        left -= next;
+        double next = random(utilisation_left / n * (1.0 - deviation), utilisation_left / n * (1.0 + deviation));
+        utilisation_left -= next;
         n--;
         utils.push_back(next);
     }
-    utils.push_back(left);
+    utils.push_back(utilisation_left);
 
     // generating periods
 
