@@ -9,15 +9,15 @@
 
 using namespace std;
 
-class TaskLoader
+class TaskReader
 {
 public:
-    TaskLoader(char *task_file_addess)
+    TaskReader(char *task_file_addess)
     {
         this->task_file_addess = task_file_addess;
     }
 
-    vector<Task> Execute()
+    vector<Task> Read()
     {
         ifstream myfile;
         myfile.open(task_file_addess);
