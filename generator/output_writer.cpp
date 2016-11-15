@@ -18,7 +18,7 @@ void OutputWriter::Write()
 
     double actual_util = 0;
 
-    for (unsigned int i = 0; i < this->tasks.size(); i++)
+    for (int i = 0; i < this->tasks.size(); i++)
     {
         outfile << this->tasks.at(i)->getOffset() << " " << this->tasks.at(i)->getPeriod() << " "
             << this->tasks.at(i)->getDeadline() << " " << this->tasks.at(i)->getWcet() << endl;

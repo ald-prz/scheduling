@@ -9,7 +9,16 @@ vector<Task *> Generator::Generate()
 {
     double min_offset = 0.0, max_offset = 100.0;
     double deviation = 0.5;
-    double period = 1000;
+    double average_wcet = 100.0;
+    double period;
+
+    if (this->configuration->getUtilisation() > 0.0)
+        period = average_wcet * this->configuration->getTaskNumber() / this->configuration->getUtilisation() * 100;
+    else
+    {
+        period = 10.0;
+        average_wcet = 0.0;
+    }
 
     // generating offsets
 
@@ -29,7 +38,9 @@ vector<Task *> Generator::Generate()
         n--;
         utils.push_back(next);
     }
-    utils.push_back(utilisation_left);
+
+    if (this->configuration->getTaskNumber() > 0)
+        utils.push_back(utilisation_left);
 
     // generating periods
 
