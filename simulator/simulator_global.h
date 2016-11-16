@@ -3,6 +3,7 @@
 
 #include <vector>
 #include <algorithm>
+#include <iostream>
 
 #include "simulator_abstract.h"
 #include "future_event_chain.h"
@@ -24,7 +25,7 @@ public:
         }
 
         for (int i = 0; i < processor_number; i++)
-            processors_free_id.push_back(i);
+            free_processor_id.push_back(i);
 
         chain = new FutureEventChain(event);
     }
@@ -39,6 +40,11 @@ public:
                 for (int i = 0; i < tasks.size(); i++)
                     if ((tasks.at(i)->Left > 0) && (tasks.at(i)->IsWorking))
                         tasks.at(i)->Left -= chain->Last_difference;
+
+            if (chain->Last_difference > 0)
+            {
+                cout << "[" << chain->getTime() - chain->Last_difference << ";" << chain->getTime() << "]" << endl;
+            }
 
             if (event == 0)
                 break;
@@ -105,7 +111,7 @@ protected:
         {
             if (tasks.at(i)->WasWorking && !tasks.at(i)->IsWorking)
             {
-                processors_free_id.push_back(tasks.at(i)->Processor_Id);
+                free_processor_id.push_back(tasks.at(i)->Processor_Id);
                 tasks.at(i)->Processor_Id = -1;
             }
         }
@@ -114,8 +120,8 @@ protected:
         {
             if (!tasks.at(i)->WasWorking && tasks.at(i)->IsWorking)
             {
-                tasks.at(i)->Processor_Id = processors_free_id[processors_free_id.size() - 1];
-                processors_free_id.pop_back();
+                tasks.at(i)->Processor_Id = free_processor_id[free_processor_id.size() - 1];
+                free_processor_id.pop_back();
 
                 if (tasks.at(i)->Left > 0)
                     chain->setEvent(i * 3 + 2, chain->getTime() + tasks.at(i)->Left);
@@ -125,7 +131,7 @@ protected:
         }
     }
 
-    vector<int> processors_free_id;
+    vector<int> free_processor_id;
 
     FutureEventChain *chain;
 };
