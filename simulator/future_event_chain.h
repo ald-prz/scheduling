@@ -12,7 +12,7 @@ public:
     FutureEventChain(vector<int> event)
     {
         this->event = event;
-        time = 0;
+        current_time = 0;
     }
 
     int DetermineNextEvent()
@@ -20,7 +20,7 @@ public:
         min_index = -1;          // -1 means that no event with positive start time found
         int min_time;
 
-        for (int i = 0; i < event.size(); i++)
+        for (unsigned int i = 0; i < event.size(); i++)
         {
             if (event.at(i) >= 0)
             {
@@ -43,7 +43,9 @@ public:
         if (min_index == -1)
             throw exception();
 
-        time = event.at(min_index);
+        Last_difference = event.at(min_index) - current_time;
+
+        current_time = event.at(min_index);
 
         return min_index;
     }
@@ -51,7 +53,7 @@ public:
 
     int getTime() const
     {
-        return time;
+        return current_time;
     }
 
     int getEvent(int index)
@@ -59,16 +61,20 @@ public:
         return event.at(index);
     }
 
-    int setEvent(int index, int time)
+    void setEvent(int index, int time)
     {
         event.at(index) = time;
     }
+
+    int Last_difference;
 
 protected:
 
     vector<int> event;
 
-    int time;
+    int current_time;
+
+
 
     int min_index;
 };

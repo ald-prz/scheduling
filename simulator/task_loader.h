@@ -49,7 +49,7 @@ public:
             myfile >> buffer;
             task->setWcet(atoi(buffer));
 
-            task->Id = id++;
+            task->TaskId = id++;
 
             result.push_back(task);
         }

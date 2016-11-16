@@ -11,6 +11,9 @@ Task::Task()
     this->wcet = 0;
     this->Left = 0;
     this->IsWorking = false;
+    this->WasWorking = false;
+    this->TaskId = -1;
+    this->Processor_Id = -1;
 }
 
 Task::Task(int offset, int period, int deadline, int wcet)

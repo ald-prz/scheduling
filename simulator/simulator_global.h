@@ -1,6 +1,9 @@
 #ifndef SIMULATOR_GLOBAL_H
 #define SIMULATOR_GLOBAL_H
 
+#include <vector>
+#include <algorithm>
+
 #include "simulator_abstract.h"
 #include "future_event_chain.h"
 
@@ -13,12 +16,15 @@ public:
         vector<int> event;
         event.push_back(max_offset + 2 * hyper_period);
 
-        for (int i = 0; i < tasks.size(); i++)
+        for (unsigned int i = 0; i < tasks.size(); i++)
         {
             event.push_back(tasks.at(i)->getOffset());
             event.push_back(-1);
             event.push_back(-1);
         }
+
+        for (int i = 0; i < processor_number; i++)
+            processors_free_id.push_back(i);
 
         chain = new FutureEventChain(event);
     }
@@ -28,6 +34,11 @@ public:
         while (true)
         {
             int event = chain->DetermineNextEvent();
+
+            if (chain->Last_difference > 0)
+                for (int i = 0; i < tasks.size(); i++)
+                    if ((tasks.at(i)->Left > 0) && (tasks.at(i)->IsWorking))
+                        tasks.at(i)->Left -= chain->Last_difference;
 
             if (event == 0)
                 break;
@@ -39,22 +50,18 @@ public:
                 if (action == 1)   // job start
                 {
                     tasks.at(index)->Left = tasks.at(index)->getWcet();
+                    chain->setEvent(index * 3 + 1, chain->getTime() + tasks.at(index)->getPeriod());
+                    chain->setEvent(index * 3 + 3, chain->getTime() + tasks.at(index)->getDeadline());
 
                     reassignTasks(tasks);
-
-                    chain->setEvent(index * 3 + 1, chain->getTime() + tasks.at(index)->getPeriod());
-
-                    if (tasks.at(index)->IsWorking)
-                        chain->setEvent(index * 3 + 2, chain->getTime() + tasks.at(index)->getWcet());
-                    else
-                        chain->setEvent(index * 3 + 2, -1);
-
-                    chain->setEvent(index * 3 + 3, chain->getTime() + tasks.at(index)->getDeadline());
                 }
 
                 if (action == 2)   // job end
                 {
+                    chain->setEvent(index * 3 + 2, -1);
+                    chain->setEvent(index * 3 + 3, -1);
 
+                    reassignTasks(tasks);
                 }
 
                 if (action == 3)   // job deadline
@@ -62,6 +69,8 @@ public:
 
                 }
             }
+
+            int a = 1; // set breakpoint here
         }
     }
 
@@ -71,18 +80,16 @@ protected:
     // output: affects the chain
     void reassignTasks(vector<Task*> tasks)
     {
-        vector<Task*> working;
-
-        for (int i = 0; i < tasks.size(); i++)  // select awaiting jobs
-            if (tasks.at(i)->Left > 0)
-                working.push_back(tasks.at(i));
+        for (unsigned int i = 0; i < tasks.size(); i++)  // select awaiting jobs
+            tasks.at(i)->MemorizeWorking();
 
 
-        for (int i = 0; i < tasks_sorted.size(); i++) // unassign all tasks
+        for (unsigned int i = 0; i < tasks_sorted.size(); i++) // unassign all tasks
             tasks_sorted.at(i)->IsWorking = false;
 
         int processors_free = this->processor_number; // reassign n most priorited tasks
-        for (int i = 0; i < tasks_sorted.size(); i++)
+
+        for (unsigned int i = 0; i < tasks_sorted.size(); i++)
             if (processors_free > 0)
             {
                 if (tasks_sorted.at(i)->Left > 0)
@@ -93,7 +100,32 @@ protected:
             }
             else
                 break;
+
+        for (unsigned int i = 0; i < tasks.size(); i++)
+        {
+            if (tasks.at(i)->WasWorking && !tasks.at(i)->IsWorking)
+            {
+                processors_free_id.push_back(tasks.at(i)->Processor_Id);
+                tasks.at(i)->Processor_Id = -1;
+            }
+        }
+
+        for (unsigned int i = 0; i < tasks.size(); i++)
+        {
+            if (!tasks.at(i)->WasWorking && tasks.at(i)->IsWorking)
+            {
+                tasks.at(i)->Processor_Id = processors_free_id[processors_free_id.size() - 1];
+                processors_free_id.pop_back();
+
+                if (tasks.at(i)->Left > 0)
+                    chain->setEvent(i * 3 + 2, chain->getTime() + tasks.at(i)->Left);
+                else
+                    chain->setEvent(i * 3 + 2, chain->getTime() + tasks.at(i)->getWcet());
+            }
+        }
     }
+
+    vector<int> processors_free_id;
 
     FutureEventChain *chain;
 };

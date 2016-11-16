@@ -19,7 +19,7 @@ public:
 
         vector<int> periods;
         vector<int> offsets;
-        for (int i = 0; i < tasks.size(); i++)
+        for (unsigned int i = 0; i < tasks.size(); i++)
         {
             periods.push_back(tasks[i]->getPeriod());
             offsets.push_back(tasks[i]->getOffset());
@@ -28,14 +28,14 @@ public:
         this->hyper_period = LeastCommonMultiple::Calculate(periods);
 
         this->max_offset = offsets.at(0);
-        for (int i = 1; i < offsets.size(); i++)
+        for (unsigned int i = 1; i < offsets.size(); i++)
             if (max_offset < offsets.at(i))
                 max_offset = offsets.at(i);
 
         tasks_sorted = tasks;
 
-        for (int i = 0; i < tasks_sorted.size() - 1; i++) // sort them by period in ascending order
-            for (int j = 0; j <= i; j++)
+        for (unsigned int i = 0; i < tasks_sorted.size() - 1; i++) // sort them by period in ascending order
+            for (unsigned int j = 0; j <= i; j++)
                 if (tasks_sorted.at(j)->getPeriod() > tasks_sorted.at(j + 1)->getPeriod())
                 {
                     Task *change;

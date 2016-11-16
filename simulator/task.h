@@ -21,11 +21,20 @@ public:
     int getWcet() const;
     void setWcet(int value);
 
+    void MemorizeWorking()
+    {
+        WasWorking = IsWorking;
+    }
+
     int Left; // time left to finish the current job
 
     bool IsWorking; // is currently working
 
-    int Id;
+    bool WasWorking; // was working at previous step
+
+    int Processor_Id;
+
+    int TaskId;
 
 private:
 
