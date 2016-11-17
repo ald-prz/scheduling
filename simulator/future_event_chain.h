@@ -28,7 +28,7 @@ public:
         event.at(index) = time;
     }
 
-    long long Last_difference;
+    long long Time_difference;
 
 protected:
 

@@ -34,7 +34,7 @@ int FutureEventChain::DetermineNextEvent()
     if (min_index == -1)
         throw exception();
 
-    Last_difference = event.at(min_index) - current_time;
+    Time_difference = event.at(min_index) - current_time;
 
     current_time = event.at(min_index);
 

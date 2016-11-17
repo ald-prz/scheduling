@@ -42,6 +42,8 @@ protected:
 
     void recalculateLeft();
 
+    void recalculateIdle();
+
     void showSimulationStep();
 
     bool processNextEvent(int event);
@@ -50,7 +52,5 @@ protected:
 
     FutureEventChain *chain;
 };
-
-
 
 #endif // SIMULATOR_GLOBAL_H

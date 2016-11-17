@@ -10,6 +10,8 @@ void SimulatorGlobal::Simulate()
 
         recalculateLeft();
 
+        recalculateIdle();
+
         if (this->show_simulation)
             showSimulationStep();
 
@@ -19,14 +21,19 @@ void SimulatorGlobal::Simulate()
 
 void SimulatorGlobal::reassignTasks(vector<Task *> tasks)
 {
-    for (unsigned int i = 0; i < tasks.size(); i++)  // select awaiting jobs
+    // remember previous state of each task
+
+    for (unsigned int i = 0; i < tasks.size(); i++)
         tasks.at(i)->MemorizeWorking();
 
+    // unassign all tasks
 
-    for (unsigned int i = 0; i < tasks_sorted.size(); i++) // unassign all tasks
+    for (unsigned int i = 0; i < tasks_sorted.size(); i++)
         tasks_sorted.at(i)->IsWorking = false;
 
-    int processors_free = this->processor_number; // reassign n most priorited tasks
+    // reassign n most priorited tasks
+
+    int processors_free = this->processor_number;
 
     for (unsigned int i = 0; i < tasks_sorted.size(); i++)
         if (processors_free > 0)
@@ -40,15 +47,25 @@ void SimulatorGlobal::reassignTasks(vector<Task *> tasks)
         else
             break;
 
+    // process tasks which stopped working
+
     for (unsigned int i = 0; i < tasks.size(); i++)
     {
         if (tasks.at(i)->WasWorking && !tasks.at(i)->IsWorking)
         {
             free_processor_id.push_back(tasks.at(i)->Processor_id);
             processors.at(tasks.at(i)->Processor_id)->Task_id = -1;
+
+            if (tasks.at(i)->Left > 0)
+            {
+                processors.at(tasks.at(i)->Processor_id)->Preemtions++;
+            }
+
             tasks.at(i)->Processor_id = -1;
         }
     }
+
+    // process tasks which started working
 
     for (unsigned int i = 0; i < tasks.size(); i++)
     {
@@ -56,6 +73,7 @@ void SimulatorGlobal::reassignTasks(vector<Task *> tasks)
         {
             tasks.at(i)->Processor_id = free_processor_id[free_processor_id.size() - 1];
             free_processor_id.pop_back();
+
             processors.at(tasks.at(i)->Processor_id)->Task_id = tasks.at(i)->Task_id;
 
             if (tasks.at(i)->Left > 0)
@@ -68,17 +86,26 @@ void SimulatorGlobal::reassignTasks(vector<Task *> tasks)
 
 void SimulatorGlobal::recalculateLeft()
 {
-    if (chain->Last_difference > 0)
+    if (chain->Time_difference > 0)
         for (unsigned int i = 0; i < tasks.size(); i++)
             if ((tasks.at(i)->Left > 0) && (tasks.at(i)->IsWorking))
-                tasks.at(i)->Left -= chain->Last_difference;
+                tasks.at(i)->Left -= chain->Time_difference;
+}
+
+
+void SimulatorGlobal::recalculateIdle()
+{
+    if (chain->Time_difference > 0)
+        for (unsigned int i = 0; i < processors.size(); i++)
+            if (processors.at(i)->Task_id == -1)
+                processors.at(i)->Idle += chain->Time_difference;
 }
 
 void SimulatorGlobal::showSimulationStep()
 {
-    if (chain->Last_difference > 0)
+    if (chain->Time_difference > 0)
     {
-        cout << "[" << chain->getTime() - chain->Last_difference << ";" << chain->getTime() << "]" << endl;
+        cout << "[" << chain->getTime() - chain->Time_difference << ";" << chain->getTime() << "]" << endl;
 
         for (int i = 0; i < processor_number; i++)
             if (processors.at(i)->Task_id != -1)
@@ -116,7 +143,7 @@ bool SimulatorGlobal::processNextEvent(int event)
             reassignTasks(tasks);
         }
 
-        if (action == 3)   // job deadline
+        if (action == 3)   // job deadline (simulation failed if got here)
         {
 
         }
