@@ -25,7 +25,7 @@ public:
         }
 
         for (int i = 0; i < processor_number; i++)
-            free_processor_id.push_back(i);
+            free_processor_id.push_back(processor_number - i - 1);
 
         chain = new FutureEventChain(event);
     }
@@ -46,6 +46,13 @@ public:
                 {
                     cout << "[" << chain->getTime() - chain->Last_difference << ";" << chain->getTime() << "]" << endl;
 
+                    for (int i = 0; i < processor_number; i++)
+                        if (processors.at(i)->Task_id != -1)
+                            cout << "#" << i + 1 << " " << processors.at(i)->Task_id + 1 << endl;
+                        else
+                            cout << "#" << i + 1 << " -" << endl;
+
+                    cout << endl;
                 }
 
             if (event == 0)
@@ -114,6 +121,7 @@ protected:
             if (tasks.at(i)->WasWorking && !tasks.at(i)->IsWorking)
             {
                 free_processor_id.push_back(tasks.at(i)->Processor_Id);
+                processors.at(tasks.at(i)->Processor_Id)->Task_id = -1;
                 tasks.at(i)->Processor_Id = -1;
             }
         }
@@ -124,6 +132,7 @@ protected:
             {
                 tasks.at(i)->Processor_Id = free_processor_id[free_processor_id.size() - 1];
                 free_processor_id.pop_back();
+                processors.at(tasks.at(i)->Processor_Id)->Task_id = tasks.at(i)->TaskId;
 
                 if (tasks.at(i)->Left > 0)
                     chain->setEvent(i * 3 + 2, chain->getTime() + tasks.at(i)->Left);

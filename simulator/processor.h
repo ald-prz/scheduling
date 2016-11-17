@@ -11,12 +11,14 @@ public:
         Idle = 0;
         Utilisation = 0.0;
         Preemtions = 0;
+        Task_id = -1;
     }
 
     int Id;
     long long Idle;
     double Utilisation;
     long long Preemtions;
+    int Task_id;
 
 
 };
