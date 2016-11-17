@@ -2,15 +2,13 @@
 #include <string.h>
 #include <vector>
 
-
 #include "simulator_abstract.h"
 #include "simulator_global.h"
 #include "future_event_chain.h"
-#include "task_loader.h"
+#include "task_reader.h"
 #include "least_common_multiple.h"
 
 using namespace std;
-
 
 int main(int argc, char *argv[])
 {

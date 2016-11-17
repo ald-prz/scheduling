@@ -21,10 +21,7 @@ public:
     long long getWcet() const;
     void setWcet(long long value);
 
-    void MemorizeWorking()
-    {
-        WasWorking = IsWorking;
-    }
+    void MemorizeWorking();
 
     long long Left; // time left to finish the current job
 
@@ -32,9 +29,9 @@ public:
 
     bool WasWorking; // was working at previous step
 
-    long long Processor_Id;
+    long long Processor_id;
 
-    long long TaskId;
+    long long Task_id;
 
 private:
 

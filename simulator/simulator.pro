@@ -4,13 +4,19 @@ CONFIG -= app_bundle
 CONFIG -= qt
 
 SOURCES += main.cpp \
-    task.cpp
+    task.cpp \
+    future_event_chain.cpp \
+    least_common_multiple.cpp \
+    simulator_abstract.cpp \
+    simulator_global.cpp \
+    processor.cpp \
+    task_reader.cpp
 
 HEADERS += \
     task.h \
-    task_loader.h \
     simulator_abstract.h \
     simulator_global.h \
     future_event_chain.h \
     least_common_multiple.h \
-    processor.h
+    processor.h \
+    task_reader.h

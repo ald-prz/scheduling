@@ -1,8 +1,5 @@
 #include "task.h"
 
-
-
-
 Task::Task()
 {
     this->offset = 0;
@@ -12,8 +9,8 @@ Task::Task()
     this->Left = 0;
     this->IsWorking = false;
     this->WasWorking = false;
-    this->TaskId = -1;
-    this->Processor_Id = -1;
+    this->Task_id = -1;
+    this->Processor_id = -1;
 }
 
 Task::Task(long long offset, long long period, long long deadline, long long wcet)
@@ -62,4 +59,9 @@ long long Task::getWcet() const
 void Task::setWcet(long long value)
 {
     wcet = value;
+}
+
+void Task::MemorizeWorking()
+{
+    WasWorking = IsWorking;
 }
