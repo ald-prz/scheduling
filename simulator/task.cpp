@@ -16,7 +16,7 @@ Task::Task()
     this->Processor_Id = -1;
 }
 
-Task::Task(int offset, int period, int deadline, int wcet)
+Task::Task(long long offset, long long period, long long deadline, long long wcet)
 {
     this->offset = offset;
     this->period = period;
@@ -24,42 +24,42 @@ Task::Task(int offset, int period, int deadline, int wcet)
     this->wcet = wcet;
 }
 
-int Task::getOffset() const
+long long Task::getOffset() const
 {
     return offset;
 }
 
-void Task::setOffset(int value)
+void Task::setOffset(long long value)
 {
     offset = value;
 }
 
-int Task::getPeriod() const
+long long Task::getPeriod() const
 {
     return period;
 }
 
-void Task::setPeriod(int value)
+void Task::setPeriod(long long value)
 {
     period = value;
 }
 
-int Task::getDeadline() const
+long long Task::getDeadline() const
 {
     return deadline;
 }
 
-void Task::setDeadline(int value)
+void Task::setDeadline(long long value)
 {
     deadline = value;
 }
 
-int Task::getWcet() const
+long long Task::getWcet() const
 {
     return wcet;
 }
 
-void Task::setWcet(int value)
+void Task::setWcet(long long value)
 {
     wcet = value;
 }

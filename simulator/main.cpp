@@ -26,7 +26,7 @@ int main(int argc, char *argv[])
     SimulatorAbstract *simulator;
 
     if (is_global)
-        simulator = new SimulatorGlobal(tasks, processor_number);
+        simulator = new SimulatorGlobal(tasks, processor_number, true);
 
     simulator->Simulate();
 

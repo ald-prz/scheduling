@@ -7,44 +7,44 @@ public:
 
     Task();
 
-    Task(int offset, int period, int deadline, int wcet);
+    Task(long long offset, long long period, long long deadline, long long wcet);
 
-    int getOffset() const;
-    void setOffset(int value);
+    long long getOffset() const;
+    void setOffset(long long value);
 
-    int getPeriod() const;
-    void setPeriod(int value);
+    long long getPeriod() const;
+    void setPeriod(long long value);
 
-    int getDeadline() const;
-    void setDeadline(int value);
+    long long getDeadline() const;
+    void setDeadline(long long value);
 
-    int getWcet() const;
-    void setWcet(int value);
+    long long getWcet() const;
+    void setWcet(long long value);
 
     void MemorizeWorking()
     {
         WasWorking = IsWorking;
     }
 
-    int Left; // time left to finish the current job
+    long long Left; // time left to finish the current job
 
     bool IsWorking; // is currently working
 
     bool WasWorking; // was working at previous step
 
-    int Processor_Id;
+    long long Processor_Id;
 
-    int TaskId;
+    long long TaskId;
 
 private:
 
-    int offset;
+    long long offset;
 
-    int period;
+    long long period;
 
-    int deadline;
+    long long deadline;
 
-    int wcet;
+    long long wcet;
 };
 
 #endif // TASK_H

@@ -10,28 +10,33 @@ class LeastCommonMultiple
 {
 public:
 
-    static int Calculate(vector<int> number_vector)
+    static long long Calculate(vector<long long> number_vector)
     {
-        int *number_array = &number_vector[0];
+        long long *number_array = &number_vector[0];
         return std::accumulate(number_array, number_array + number_vector.size(), 1, pairLcm);
     }
 
 private:
 
-    static int greatestCommonDivisor(int a, int b)
+    static int greatestCommonDivisor(long long a, long long b)
     {
         for (;;)
         {
-            if (a == 0) return b;
+            if (a == 0)
+                return b;
+
             b %= a;
-            if (b == 0) return a;
+
+            if (b == 0)
+                return a;
+
             a %= b;
         }
     }
 
-    static int pairLcm(int a, int b)
+    static long long pairLcm(long long a, long long b)
     {
-        int result = greatestCommonDivisor(a, b);
+        long long result = greatestCommonDivisor(a, b);
 
         return result ? (a / result * b) : 0;
     }

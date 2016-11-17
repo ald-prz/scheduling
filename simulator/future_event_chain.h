@@ -18,7 +18,7 @@ public:
     int DetermineNextEvent()
     {
         min_index = -1;          // -1 means that no event with positive start time found
-        int min_time;
+        long long min_time;
 
         for (unsigned int i = 0; i < event.size(); i++)
         {
@@ -51,7 +51,7 @@ public:
     }
 
 
-    int getTime() const
+    long long getTime() const
     {
         return current_time;
     }
@@ -61,20 +61,18 @@ public:
         return event.at(index);
     }
 
-    void setEvent(int index, int time)
+    void setEvent(int index, long long time)
     {
         event.at(index) = time;
     }
 
-    int Last_difference;
+    long long Last_difference;
 
 protected:
 
     vector<int> event;
 
-    int current_time;
-
-
+    long long current_time;
 
     int min_index;
 };

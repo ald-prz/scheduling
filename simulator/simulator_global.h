@@ -12,7 +12,7 @@ class SimulatorGlobal : public SimulatorAbstract
 {
 public:
 
-    SimulatorGlobal(vector<Task*> tasks, int processor_number) : SimulatorAbstract(tasks, processor_number)
+    SimulatorGlobal(vector<Task*> tasks, int processor_number, bool show_simulation) : SimulatorAbstract(tasks, processor_number, show_simulation)
     {
         vector<int> event;
         event.push_back(max_offset + 2 * hyper_period);
@@ -37,14 +37,16 @@ public:
             int event = chain->DetermineNextEvent();
 
             if (chain->Last_difference > 0)
-                for (int i = 0; i < tasks.size(); i++)
+                for (unsigned int i = 0; i < tasks.size(); i++)
                     if ((tasks.at(i)->Left > 0) && (tasks.at(i)->IsWorking))
                         tasks.at(i)->Left -= chain->Last_difference;
 
-            if (chain->Last_difference > 0)
-            {
-                cout << "[" << chain->getTime() - chain->Last_difference << ";" << chain->getTime() << "]" << endl;
-            }
+            if (this->show_simulation)
+                if (chain->Last_difference > 0)
+                {
+                    cout << "[" << chain->getTime() - chain->Last_difference << ";" << chain->getTime() << "]" << endl;
+
+                }
 
             if (event == 0)
                 break;
