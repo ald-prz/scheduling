@@ -7,6 +7,7 @@
 
 #include "simulator_abstract.h"
 #include "future_event_chain.h"
+#include "simulation_result.h"
 
 class SimulatorGlobal : public SimulatorAbstract
 {
@@ -30,12 +31,12 @@ public:
         chain = new FutureEventChain(event);
     }
 
-    virtual void Simulate() override;
+    SimulationResult Simulate() override;
 
 protected:
 
     /*!
-     * \brief Reassigns tasks over the processors by global DM strategy
+     * \brief Reassigns tasks over the processors according to global DM strategy
      * \param tasks Vector of tasks which should be reassigned
      */
     void reassignTasks(vector<Task*> tasks);

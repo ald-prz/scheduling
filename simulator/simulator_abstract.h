@@ -6,6 +6,7 @@
 #include "task.h"
 #include "least_common_multiple.h"
 #include "processor.h"
+#include "simulation_result.h"
 
 using namespace std;
 
@@ -15,7 +16,7 @@ public:
 
     SimulatorAbstract(vector<Task*> tasks, int processor_number, bool show_simulation);
 
-    virtual void Simulate() = 0;
+    virtual SimulationResult Simulate() = 0;
 
 protected:
 
@@ -29,6 +30,8 @@ protected:
     long long max_offset;
 
     bool show_simulation;
+
+    bool schedulable;
 
 private:
 

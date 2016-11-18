@@ -7,6 +7,7 @@
 #include "future_event_chain.h"
 #include "task_reader.h"
 #include "least_common_multiple.h"
+#include "simulation_result.h"
 
 using namespace std;
 
@@ -26,7 +27,8 @@ int main(int argc, char *argv[])
     if (is_global)
         simulator = new SimulatorGlobal(tasks, processor_number, true);
 
-    simulator->Simulate();
+    SimulationResult result = simulator->Simulate();
+    result.Print();
 
     cout << "finished" << endl;
 

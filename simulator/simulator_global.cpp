@@ -1,8 +1,11 @@
 #include "simulator_global.h"
 
-void SimulatorGlobal::Simulate()
+SimulationResult SimulatorGlobal::Simulate()
 {
     bool mustFinish = false;
+    schedulable = true;
+
+    chain->setEvent(0, 17); // TO-REMOVE!!!
 
     while (mustFinish == false)
     {
@@ -17,6 +20,8 @@ void SimulatorGlobal::Simulate()
 
         mustFinish = processNextEvent(event);
     }
+
+    return SimulationResult(processors, schedulable, chain->getTime());
 }
 
 void SimulatorGlobal::reassignTasks(vector<Task *> tasks)
@@ -92,7 +97,6 @@ void SimulatorGlobal::recalculateLeft()
                 tasks.at(i)->Left -= chain->Time_difference;
 }
 
-
 void SimulatorGlobal::recalculateIdle()
 {
     if (chain->Time_difference > 0)
@@ -117,6 +121,11 @@ void SimulatorGlobal::showSimulationStep()
     }
 }
 
+/*!
+ * \brief Processes the next event in the event list according to FEC algorithm
+ * \param event Index of the next event
+ * \return Flag if must finish the simulation
+ */
 bool SimulatorGlobal::processNextEvent(int event)
 {
     if (event == 0) // simulation time over
@@ -145,7 +154,7 @@ bool SimulatorGlobal::processNextEvent(int event)
 
         if (action == 3)   // job deadline (simulation failed if got here)
         {
-
+            return true;
         }
     }
 

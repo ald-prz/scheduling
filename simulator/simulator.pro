@@ -10,7 +10,8 @@ SOURCES += main.cpp \
     simulator_abstract.cpp \
     simulator_global.cpp \
     processor.cpp \
-    task_reader.cpp
+    task_reader.cpp \
+    simulation_result.cpp
 
 HEADERS += \
     task.h \
@@ -19,4 +20,5 @@ HEADERS += \
     future_event_chain.h \
     least_common_multiple.h \
     processor.h \
-    task_reader.h
+    task_reader.h \
+    simulation_result.h
