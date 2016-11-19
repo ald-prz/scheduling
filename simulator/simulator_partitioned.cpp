@@ -2,6 +2,8 @@
 
 SimulatorPartitioned::SimulatorPartitioned(vector<Task *> tasks, int processor_number, bool show_simulation) : SimulatorAbstract(tasks, processor_number, show_simulation)
 {
+    BestFitPacker packer(tasks, processor_number);
+    packer.Pack();
 }
 
 SimulationResult SimulatorPartitioned::Simulate()
@@ -36,10 +38,9 @@ void SimulatorPartitioned::reassignTasks(vector<Task *> tasks)
     // unassign all tasks
 
     for (unsigned int i = 0; i < tasks.size(); i++)
-    {
         tasks.at(i)->IsWorking = false;
-        tasks.at(i)->Processor_id = -1;
-    }
+
+    // reassign tasks over the processors
 
     for (unsigned int i = 0; i < processors.size(); i++)
     {
@@ -47,7 +48,7 @@ void SimulatorPartitioned::reassignTasks(vector<Task *> tasks)
         int min_period;
 
         for (unsigned int j = 0; j < tasks.size(); j++)
-            if ((tasks.at(i)->Processor_id == i) && (tasks.at(j)->Left > 0))
+            if ((tasks.at(j)->Processor_id == i) && (tasks.at(j)->Left > 0))
                 if (index != -1)
                 {
                     if (tasks.at(j)->getPeriod() < min_period)
@@ -66,11 +67,16 @@ void SimulatorPartitioned::reassignTasks(vector<Task *> tasks)
         {
             if (processors.at(i)->Task_id != index)
             {
-                tasks.at(processors.at(i)->Task_id)->IsWorking = false;
-                processors.at(i)->Task_id = index;
-                processors.at(i)->Preemtions++;
+                if (processors.at(i)->Task_id != -1)
+                {
+                    processors.at(i)->Preemtions++;
+                    chain->setEvent(processors.at(i)->Task_id * 3 + 2, -1);
+                }
 
-                if (tasks.at(i)->Left > 0)
+                processors.at(i)->Task_id = index;
+
+
+                if (tasks.at(index)->Left > 0)
                     chain->setEvent(index * 3 + 2, chain->getTime() + tasks.at(index)->Left);
                 else
                     chain->setEvent(index * 3 + 2, chain->getTime() + tasks.at(index)->getWcet());
@@ -107,9 +113,9 @@ void SimulatorPartitioned::showSimulationStep()
 
         for (int i = 0; i < processor_number; i++)
             if (processors.at(i)->Task_id != -1)
-                cout << "#" << i + 1 << " " << processors.at(i)->Task_id + 1 << endl;
+                cout << "#" << i << " " << processors.at(i)->Task_id << endl;
             else
-                cout << "#" << i + 1 << " -" << endl;
+                cout << "#" << i << " -" << endl;
 
         cout << endl;
     }
@@ -142,6 +148,8 @@ bool SimulatorPartitioned::processNextEvent(int event)
         {
             chain->setEvent(index * 3 + 2, -1);
             chain->setEvent(index * 3 + 3, -1);
+
+            processors.at(tasks.at(index)->Processor_id)->Task_id = -1;
 
             reassignTasks(tasks);
         }

@@ -7,6 +7,7 @@
 
 #include "simulator_abstract.h"
 #include "simulation_result.h"
+#include "best_fit_packer.h"
 
 class SimulatorPartitioned : public SimulatorAbstract
 {

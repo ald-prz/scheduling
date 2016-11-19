@@ -119,9 +119,9 @@ void SimulatorGlobal::showSimulationStep()
 
         for (int i = 0; i < processor_number; i++)
             if (processors.at(i)->Task_id != -1)
-                cout << "#" << i + 1 << " " << processors.at(i)->Task_id + 1 << endl;
+                cout << "#" << i << " " << processors.at(i)->Task_id << endl;
             else
-                cout << "#" << i + 1 << " -" << endl;
+                cout << "#" << i << " -" << endl;
 
         cout << endl;
     }

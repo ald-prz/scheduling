@@ -27,24 +27,24 @@ void SimulationResult::Print(char *output_file_path)
         file << "[preemtions_total]=" << Preemtions << endl;
         for (unsigned int i = 0; i < Processors.size(); i++)
         {
-            cout << "[preemtions_" << i + 1 << "]=" << Processors.at(i)->Preemtions << endl;
-            file << "[preemtions_" << i + 1 << "]=" << Processors.at(i)->Preemtions << endl;
+            cout << "[preemtions_" << i << "]=" << Processors.at(i)->Preemtions << endl;
+            file << "[preemtions_" << i << "]=" << Processors.at(i)->Preemtions << endl;
         }
 
         cout << "[idle_total]=" << this->Idle << endl;
         file << "[idle_total]=" << this->Idle << endl;
         for (unsigned int i = 0; i < Processors.size(); i++)
         {
-            cout << "[idle_" << i + 1 << "]=" << Processors.at(i)->Idle << endl;
-            file << "[idle_" << i + 1 << "]=" << Processors.at(i)->Idle << endl;
+            cout << "[idle_" << i << "]=" << Processors.at(i)->Idle << endl;
+            file << "[idle_" << i << "]=" << Processors.at(i)->Idle << endl;
         }
 
         cout << "[utilisation_total]=" << Total_utilisation * 100 << endl;
         file << "[utilisation_total]=" << Total_utilisation * 100 << endl;
         for (unsigned int i = 0; i < Processors.size(); i++)
         {
-            cout << "[utilisation_" << i + 1 << "]=" << Processors.at(i)->Utilisation * 100 << endl;
-            file << "[utilisation_" << i + 1 << "]=" << Processors.at(i)->Utilisation * 100 << endl;
+            cout << "[utilisation_" << i << "]=" << Processors.at(i)->Utilisation * 100 << endl;
+            file << "[utilisation_" << i << "]=" << Processors.at(i)->Utilisation * 100 << endl;
         }
     }
     else
