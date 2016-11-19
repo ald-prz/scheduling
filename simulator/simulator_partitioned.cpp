@@ -156,6 +156,7 @@ bool SimulatorPartitioned::processNextEvent(int event)
 
         if (action == 3)   // job deadline (simulation failed if got here)
         {
+            schedulable = false;
             return true;
         }
     }
