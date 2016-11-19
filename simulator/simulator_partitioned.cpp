@@ -25,7 +25,7 @@ SimulationResult SimulatorPartitioned::Simulate()
         mustFinish = processNextEvent(event);
     }
 
-    return SimulationResult(processors, schedulable, chain->getTime());
+    return SimulationResult(processor, schedulable, chain->getTime());
 }
 
 void SimulatorPartitioned::reassignTasks(vector<Task *> tasks)
@@ -42,10 +42,12 @@ void SimulatorPartitioned::reassignTasks(vector<Task *> tasks)
 
     // reassign tasks over the processors
 
-    for (unsigned int i = 0; i < processors.size(); i++)
+    for (unsigned int i = 0; i < processor.size(); i++)
     {
         int index = -1;
         int min_period;
+
+        // find an appropriate task for [i] processor
 
         for (unsigned int j = 0; j < tasks.size(); j++)
             if ((tasks.at(j)->Processor_id == i) && (tasks.at(j)->Left > 0))
@@ -63,17 +65,19 @@ void SimulatorPartitioned::reassignTasks(vector<Task *> tasks)
                     min_period = tasks.at(j)->getPeriod();
                 }
 
+        // assign the task to the processor if found
+
         if (index != -1)
         {
-            if (processors.at(i)->Task_id != index)
+            if (processor.at(i)->Task_id != index)
             {
-                if (processors.at(i)->Task_id != -1)
+                if (processor.at(i)->Task_id != -1)
                 {
-                    processors.at(i)->Preemtions++;
-                    chain->setEvent(processors.at(i)->Task_id * 3 + 2, -1);
+                    processor.at(i)->Preemtions++;
+                    chain->setEvent(processor.at(i)->Task_id * 3 + 2, -1);
                 }
 
-                processors.at(i)->Task_id = index;
+                processor.at(i)->Task_id = index;
 
 
                 if (tasks.at(index)->Left > 0)
@@ -85,39 +89,7 @@ void SimulatorPartitioned::reassignTasks(vector<Task *> tasks)
             tasks.at(index)->IsWorking = true;
         }
         else
-            processors.at(i)->Task_id = -1;
-    }
-}
-
-void SimulatorPartitioned::recalculateLeft()
-{
-    if (chain->Time_difference > 0)
-        for (unsigned int i = 0; i < tasks.size(); i++)
-            if ((tasks.at(i)->Left > 0) && (tasks.at(i)->IsWorking))
-                tasks.at(i)->Left -= chain->Time_difference;
-}
-
-void SimulatorPartitioned::recalculateIdle()
-{
-    if (chain->Time_difference > 0)
-        for (unsigned int i = 0; i < processors.size(); i++)
-            if (processors.at(i)->Task_id == -1)
-                processors.at(i)->Idle += chain->Time_difference;
-}
-
-void SimulatorPartitioned::showSimulationStep()
-{
-    if (chain->Time_difference > 0)
-    {
-        cout << "[" << chain->getTime() - chain->Time_difference << ";" << chain->getTime() << "]" << endl;
-
-        for (int i = 0; i < processor_number; i++)
-            if (processors.at(i)->Task_id != -1)
-                cout << "#" << i << " " << processors.at(i)->Task_id << endl;
-            else
-                cout << "#" << i << " -" << endl;
-
-        cout << endl;
+            processor.at(i)->Task_id = -1;
     }
 }
 
@@ -137,11 +109,11 @@ bool SimulatorPartitioned::processNextEvent(int event)
 
         if (action == 1)   // job start
         {
-            tasks.at(index)->Left = tasks.at(index)->getWcet();
-            chain->setEvent(index * 3 + 1, chain->getTime() + tasks.at(index)->getPeriod());
-            chain->setEvent(index * 3 + 3, chain->getTime() + tasks.at(index)->getDeadline());
+            task.at(index)->Left = task.at(index)->getWcet();
+            chain->setEvent(index * 3 + 1, chain->getTime() + task.at(index)->getPeriod());
+            chain->setEvent(index * 3 + 3, chain->getTime() + task.at(index)->getDeadline());
 
-            reassignTasks(tasks);
+            reassignTasks(task);
         }
 
         if (action == 2)   // job end
@@ -149,9 +121,9 @@ bool SimulatorPartitioned::processNextEvent(int event)
             chain->setEvent(index * 3 + 2, -1);
             chain->setEvent(index * 3 + 3, -1);
 
-            processors.at(tasks.at(index)->Processor_id)->Task_id = -1;
+            processor.at(task.at(index)->Processor_id)->Task_id = -1;
 
-            reassignTasks(tasks);
+            reassignTasks(task);
         }
 
         if (action == 3)   // job deadline (simulation failed if got here)

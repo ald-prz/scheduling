@@ -12,7 +12,7 @@ class SimulatorGlobal : public SimulatorAbstract
 {
 public:
 
-    SimulatorGlobal(vector<Task*> tasks, int processor_number, bool show_simulation);
+    SimulatorGlobal(vector<Task*> task, int processor_num, bool show_simulation);
 
     SimulationResult Simulate() override;
 
@@ -22,13 +22,7 @@ protected:
      * \brief Reassigns tasks over the processors according to global DM strategy
      * \param tasks Vector of tasks which should be reassigned
      */
-    void reassignTasks(vector<Task*> tasks);
-
-    void recalculateLeft();
-
-    void recalculateIdle();
-
-    void showSimulationStep();
+    void reassignTasks(vector<Task*> task);
 
     bool processNextEvent(int event);
 
@@ -36,7 +30,7 @@ protected:
 
     vector<int> free_processor_id;    
 
-    vector<Task*> tasks_sorted;
+    vector<Task*> task_sorted;
 };
 
 #endif // SIMULATOR_GLOBAL_H

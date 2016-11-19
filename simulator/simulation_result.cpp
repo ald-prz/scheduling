@@ -1,6 +1,6 @@
 #include "simulation_result.h"
 
-SimulationResult::SimulationResult(vector<Processor *> processors, bool is_schedulable, long long simulation_time)
+SimulationResult::SimulationResult(vector<Processor*> processors, bool is_schedulable, long long simulation_time)
 {
     this->IsSchedulable = is_schedulable;
     this->Processors = processors;

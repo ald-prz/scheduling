@@ -1,14 +1,14 @@
 #include "task_reader.h"
 
-TaskReader::TaskReader(char *task_file_addess)
+TaskReader::TaskReader(char *task_file_address)
 {
-    this->task_file_addess = task_file_addess;
+    this->task_file_address = task_file_address;
 }
 
 vector<Task *> TaskReader::Read()
 {
     ifstream myfile;
-    myfile.open(task_file_addess);
+    myfile.open(task_file_address);
     vector<Task*> result;
 
     int id = 0;

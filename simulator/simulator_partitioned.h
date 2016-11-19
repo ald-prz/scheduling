@@ -13,7 +13,7 @@ class SimulatorPartitioned : public SimulatorAbstract
 {
 public:
 
-    SimulatorPartitioned(vector<Task*> tasks, int processor_number, bool show_simulation);
+    SimulatorPartitioned(vector<Task*> task, int processor_num, bool show_simulation);
 
     SimulationResult Simulate() override;
 
@@ -23,13 +23,7 @@ protected:
      * \brief Reassigns tasks over the processors according to partitioned DM strategy
      * \param tasks Vector of tasks which should be reassigned
      */
-    void reassignTasks(vector<Task*> tasks);
-
-    void recalculateLeft();
-
-    void recalculateIdle();
-
-    void showSimulationStep();
+    void reassignTasks(vector<Task*> task);
 
     bool processNextEvent(int event);
 };

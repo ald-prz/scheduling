@@ -15,17 +15,17 @@ class SimulatorAbstract
 {
 public:
 
-    SimulatorAbstract(vector<Task*> tasks, int processor_number, bool show_simulation);
+    SimulatorAbstract(vector<Task*> task, int processor_num, bool show_simulation);
 
     virtual SimulationResult Simulate() = 0;
 
 protected:
 
-    vector<Task*> tasks;
+    vector<Task*> task;
 
-    vector<Processor*> processors;
+    vector<Processor*> processor;
 
-    int processor_number;
+    int processor_num;
 
     long long hyper_period;
 
@@ -36,6 +36,12 @@ protected:
     bool schedulable;
 
     FutureEventChain *chain;
+
+    void recalculateLeft();
+
+    void recalculateIdle();
+
+    void showSimulationStep();
 
 private:
 

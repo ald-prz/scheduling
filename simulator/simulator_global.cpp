@@ -27,7 +27,7 @@ SimulationResult SimulatorGlobal::Simulate()
         mustFinish = processNextEvent(event);
     }
 
-    return SimulationResult(processors, schedulable, chain->getTime());
+    return SimulationResult(processor, schedulable, chain->getTime());
 }
 
 void SimulatorGlobal::reassignTasks(vector<Task *> tasks)
@@ -39,19 +39,19 @@ void SimulatorGlobal::reassignTasks(vector<Task *> tasks)
 
     // unassign all tasks
 
-    for (unsigned int i = 0; i < tasks_sorted.size(); i++)
-        tasks_sorted.at(i)->IsWorking = false;
+    for (unsigned int i = 0; i < task_sorted.size(); i++)
+        task_sorted.at(i)->IsWorking = false;
 
     // reassign n most priorited tasks
 
-    int processors_free = this->processor_number;
+    int processors_free = this->processor_num;
 
-    for (unsigned int i = 0; i < tasks_sorted.size(); i++)
+    for (unsigned int i = 0; i < task_sorted.size(); i++)
         if (processors_free > 0)
         {
-            if (tasks_sorted.at(i)->Left > 0)
+            if (task_sorted.at(i)->Left > 0)
             {
-                tasks_sorted.at(i)->IsWorking = true;
+                task_sorted.at(i)->IsWorking = true;
                 processors_free--;
             }
         }
@@ -65,10 +65,10 @@ void SimulatorGlobal::reassignTasks(vector<Task *> tasks)
         if (tasks.at(i)->WasWorking && !tasks.at(i)->IsWorking)
         {
             free_processor_id.push_back(tasks.at(i)->Processor_id);
-            processors.at(tasks.at(i)->Processor_id)->Task_id = -1;
+            processor.at(tasks.at(i)->Processor_id)->Task_id = -1;
 
             if (tasks.at(i)->Left > 0)
-                processors.at(tasks.at(i)->Processor_id)->Preemtions++;
+                processor.at(tasks.at(i)->Processor_id)->Preemtions++;
             else
                 chain->setEvent(i * 3 + 3, -1);
 
@@ -87,45 +87,13 @@ void SimulatorGlobal::reassignTasks(vector<Task *> tasks)
             tasks.at(i)->Processor_id = free_processor_id[free_processor_id.size() - 1];
             free_processor_id.pop_back();
 
-            processors.at(tasks.at(i)->Processor_id)->Task_id = tasks.at(i)->Task_id;
+            processor.at(tasks.at(i)->Processor_id)->Task_id = tasks.at(i)->Task_id;
 
             if (tasks.at(i)->Left > 0)
                 chain->setEvent(i * 3 + 2, chain->getTime() + tasks.at(i)->Left);
             else
                 chain->setEvent(i * 3 + 2, chain->getTime() + tasks.at(i)->getWcet());
         }
-    }
-}
-
-void SimulatorGlobal::recalculateLeft()
-{
-    if (chain->Time_difference > 0)
-        for (unsigned int i = 0; i < tasks.size(); i++)
-            if ((tasks.at(i)->Left > 0) && (tasks.at(i)->IsWorking))
-                tasks.at(i)->Left -= chain->Time_difference;
-}
-
-void SimulatorGlobal::recalculateIdle()
-{
-    if (chain->Time_difference > 0)
-        for (unsigned int i = 0; i < processors.size(); i++)
-            if (processors.at(i)->Task_id == -1)
-                processors.at(i)->Idle += chain->Time_difference;
-}
-
-void SimulatorGlobal::showSimulationStep()
-{
-    if (chain->Time_difference > 0)
-    {
-        cout << "[" << chain->getTime() - chain->Time_difference << ";" << chain->getTime() << "]" << endl;
-
-        for (int i = 0; i < processor_number; i++)
-            if (processors.at(i)->Task_id != -1)
-                cout << "#" << i << " " << processors.at(i)->Task_id << endl;
-            else
-                cout << "#" << i << " -" << endl;
-
-        cout << endl;
     }
 }
 
@@ -145,11 +113,11 @@ bool SimulatorGlobal::processNextEvent(int event)
 
         if (action == 1)   // job start
         {
-            tasks.at(index)->Left = tasks.at(index)->getWcet();
-            chain->setEvent(index * 3 + 1, chain->getTime() + tasks.at(index)->getPeriod());
-            chain->setEvent(index * 3 + 3, chain->getTime() + tasks.at(index)->getDeadline());
+            task.at(index)->Left = task.at(index)->getWcet();
+            chain->setEvent(index * 3 + 1, chain->getTime() + task.at(index)->getPeriod());
+            chain->setEvent(index * 3 + 3, chain->getTime() + task.at(index)->getDeadline());
 
-            reassignTasks(tasks);
+            reassignTasks(task);
         }
 
         if (action == 2)   // job end
@@ -157,7 +125,7 @@ bool SimulatorGlobal::processNextEvent(int event)
             chain->setEvent(index * 3 + 2, -1);
             chain->setEvent(index * 3 + 3, -1);
 
-            reassignTasks(tasks);
+            reassignTasks(task);
         }
 
         if (action == 3)   // job deadline (simulation failed if got here)
@@ -172,15 +140,15 @@ bool SimulatorGlobal::processNextEvent(int event)
 
 void SimulatorGlobal::sortTasks()
 {
-    tasks_sorted = tasks;
+    task_sorted = task;
 
-    for (unsigned int i = 0; i < tasks_sorted.size() - 1; i++) // sort them by period in ascending order
+    for (unsigned int i = 0; i < task_sorted.size() - 1; i++) // sort them by period in ascending order
         for (unsigned int j = 0; j <= i; j++)
-            if (tasks_sorted.at(j)->getPeriod() > tasks_sorted.at(j + 1)->getPeriod())
+            if (task_sorted.at(j)->getPeriod() > task_sorted.at(j + 1)->getPeriod())
             {
                 Task *change;
-                change = tasks_sorted.at(j);
-                tasks_sorted.at(j) = tasks_sorted.at(j + 1);
-                tasks_sorted.at(j + 1) = change;
+                change = task_sorted.at(j);
+                task_sorted.at(j) = task_sorted.at(j + 1);
+                task_sorted.at(j + 1) = change;
             }
 }

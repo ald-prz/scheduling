@@ -14,13 +14,13 @@ class TaskReader
 {
 public:
 
-    TaskReader(char *task_file_addess);
+    TaskReader(char *task_file_address);
 
     vector<Task*> Read();
 
 protected:
 
-    char *task_file_addess;
+    char *task_file_address;
 };
 
 #endif // TASK_LOADER_H
