@@ -21,4 +21,5 @@ HEADERS += \
     least_common_multiple.h \
     processor.h \
     task_reader.h \
-    simulation_result.h
+    simulation_result.h \
+    best_fit_packer.h

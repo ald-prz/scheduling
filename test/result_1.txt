@@ -1,0 +1,12 @@
+[schedulable]=yes
+[interval]=[0;17]
+[preemtions_total]=1
+[preemtions_1]=1
+[preemtions_2]=0
+[idle_total]=12
+[idle_1]=7
+[idle_2]=5
+[utilisation_total]=64.7059
+[utilisation_1]=58.8235
+[utilisation_2]=70.5882
+

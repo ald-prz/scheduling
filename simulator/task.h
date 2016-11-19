@@ -21,6 +21,8 @@ public:
     long long getWcet() const;
     void setWcet(long long value);
 
+    double Utilisation;
+
     void MemorizeWorking();
 
     long long Left; // time left to finish the current job

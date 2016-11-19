@@ -19,6 +19,7 @@ Task::Task(long long offset, long long period, long long deadline, long long wce
     this->period = period;
     this->deadline = deadline;
     this->wcet = wcet;
+
 }
 
 long long Task::getOffset() const
@@ -39,6 +40,9 @@ long long Task::getPeriod() const
 void Task::setPeriod(long long value)
 {
     period = value;
+
+    if (this->period != 0)
+        this->Utilisation = ((double) this->wcet) / this->period;
 }
 
 long long Task::getDeadline() const
@@ -59,6 +63,9 @@ long long Task::getWcet() const
 void Task::setWcet(long long value)
 {
     wcet = value;
+
+    if (this->period != 0)
+        this->Utilisation = ((double) this->wcet) / this->period;
 }
 
 void Task::MemorizeWorking()
