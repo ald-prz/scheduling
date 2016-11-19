@@ -8,8 +8,6 @@ SimulationResult::SimulationResult(vector<Processor *> processors, bool is_sched
     this->Preemtions = 0;
     this->Idle = 0;
 
-
-
     recalculateUtilisations();
 }
 

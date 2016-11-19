@@ -25,11 +25,20 @@ public:
 
     void MemorizeWorking();
 
-    long long Left; // time left to finish the current job
+    /*!
+     * \brief Time left to finish the current job
+     */
+    long long Left;
 
-    bool IsWorking; // is currently working
+    /*!
+     * \brief Is currently working
+     */
+    bool IsWorking;
 
-    bool WasWorking; // was working at previous step
+    /*!
+     * \brief Was working at previous step
+     */
+    bool WasWorking;
 
     long long Processor_id;
 

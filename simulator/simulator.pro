@@ -11,7 +11,8 @@ SOURCES += main.cpp \
     simulator_global.cpp \
     processor.cpp \
     task_reader.cpp \
-    simulation_result.cpp
+    simulation_result.cpp \
+    simulator_partitioned.cpp
 
 HEADERS += \
     task.h \
@@ -22,4 +23,5 @@ HEADERS += \
     processor.h \
     task_reader.h \
     simulation_result.h \
-    best_fit_packer.h
+    best_fit_packer.h \
+    simulator_partitioned.h

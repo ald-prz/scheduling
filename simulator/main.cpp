@@ -4,6 +4,7 @@
 
 #include "simulator_abstract.h"
 #include "simulator_global.h"
+#include "simulator_partitioned.h"
 #include "future_event_chain.h"
 #include "task_reader.h"
 #include "least_common_multiple.h"
@@ -26,13 +27,12 @@ int main(int argc, char *argv[])
     TaskReader task_loader(task_file_address);
     vector<Task*> task = task_loader.Read();
 
-    BestFitPacker packer(task, processor_num);
-    bool t = packer.Pack();
-
     SimulatorAbstract *simulator;
 
     if (is_global)
         simulator = new SimulatorGlobal(task, processor_num, true);
+    else
+        simulator = new SimulatorPartitioned(task, processor_num, true);
 
     SimulationResult result = simulator->Simulate();
     result.Print("result.txt");
