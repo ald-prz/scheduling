@@ -16,7 +16,7 @@ SimulationResult::SimulationResult(vector<Processor *> processors, bool is_sched
 void SimulationResult::Print(char *output_file_path)
 {
     ofstream file;
-    file.open("result.txt");
+    file.open(output_file_path);
 
     if (this->IsSchedulable)
     {
@@ -27,7 +27,7 @@ void SimulationResult::Print(char *output_file_path)
 
         cout << "[preemtions_total]=" << Preemtions << endl;
         file << "[preemtions_total]=" << Preemtions << endl;
-        for (int i = 0; i < Processors.size(); i++)   
+        for (unsigned int i = 0; i < Processors.size(); i++)
         {
             cout << "[preemtions_" << i + 1 << "]=" << Processors.at(i)->Preemtions << endl;
             file << "[preemtions_" << i + 1 << "]=" << Processors.at(i)->Preemtions << endl;
@@ -35,7 +35,7 @@ void SimulationResult::Print(char *output_file_path)
 
         cout << "[idle_total]=" << this->Idle << endl;
         file << "[idle_total]=" << this->Idle << endl;
-        for (int i = 0; i < Processors.size(); i++)
+        for (unsigned int i = 0; i < Processors.size(); i++)
         {
             cout << "[idle_" << i + 1 << "]=" << Processors.at(i)->Idle << endl;
             file << "[idle_" << i + 1 << "]=" << Processors.at(i)->Idle << endl;
@@ -43,7 +43,7 @@ void SimulationResult::Print(char *output_file_path)
 
         cout << "[utilisation_total]=" << Total_utilisation * 100 << endl;
         file << "[utilisation_total]=" << Total_utilisation * 100 << endl;
-        for (int i = 0; i < Processors.size(); i++)
+        for (unsigned int i = 0; i < Processors.size(); i++)
         {
             cout << "[utilisation_" << i + 1 << "]=" << Processors.at(i)->Utilisation * 100 << endl;
             file << "[utilisation_" << i + 1 << "]=" << Processors.at(i)->Utilisation * 100 << endl;
@@ -65,7 +65,7 @@ void SimulationResult::recalculateUtilisations()
 {
     long long sum = 0;
 
-    for (int i = 0; i < Processors.size(); i++)
+    for (unsigned int i = 0; i < Processors.size(); i++)
     {
         Processors.at(i)->Utilisation = ((double)(Simulation_time - Processors.at(i)->Idle)) / Simulation_time;
         sum += Simulation_time - Processors.at(i)->Idle;
