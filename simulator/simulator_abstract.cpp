@@ -7,8 +7,20 @@ SimulatorAbstract::SimulatorAbstract(vector<Task *> tasks, int processor_number,
     this->show_simulation = show_simulation;
 
     setAttributes();
-    sortTasks();
+
     initializeProcessors();
+
+    vector<int> event;
+    event.push_back(max_offset + 2 * hyper_period);
+
+    for (unsigned int i = 0; i < tasks.size(); i++)
+    {
+        event.push_back(tasks.at(i)->getOffset());
+        event.push_back(-1);
+        event.push_back(-1);
+    }
+
+    chain = new FutureEventChain(event);
 }
 
 void SimulatorAbstract::setAttributes()
@@ -29,21 +41,6 @@ void SimulatorAbstract::setAttributes()
     for (unsigned int i = 1; i < offsets.size(); i++)
         if (max_offset < offsets.at(i))
             max_offset = offsets.at(i);
-}
-
-void SimulatorAbstract::sortTasks()
-{
-    tasks_sorted = tasks;
-
-    for (unsigned int i = 0; i < tasks_sorted.size() - 1; i++) // sort them by period in ascending order
-        for (unsigned int j = 0; j <= i; j++)
-            if (tasks_sorted.at(j)->getPeriod() > tasks_sorted.at(j + 1)->getPeriod())
-            {
-                Task *change;
-                change = tasks_sorted.at(j);
-                tasks_sorted.at(j) = tasks_sorted.at(j + 1);
-                tasks_sorted.at(j + 1) = change;
-            }
 }
 
 void SimulatorAbstract::initializeProcessors()

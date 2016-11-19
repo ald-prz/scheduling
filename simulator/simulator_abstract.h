@@ -7,6 +7,7 @@
 #include "least_common_multiple.h"
 #include "processor.h"
 #include "simulation_result.h"
+#include "future_event_chain.h"
 
 using namespace std;
 
@@ -21,23 +22,24 @@ public:
 protected:
 
     vector<Task*> tasks;
-    vector<Task*> tasks_sorted;
 
     vector<Processor*> processors;
 
     int processor_number;
+
     long long hyper_period;
+
     long long max_offset;
 
     bool show_simulation;
 
     bool schedulable;
 
+    FutureEventChain *chain;
+
 private:
 
     void setAttributes();
-
-    void sortTasks();
 
     void initializeProcessors();
 };

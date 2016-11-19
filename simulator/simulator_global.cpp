@@ -1,11 +1,17 @@
 #include "simulator_global.h"
 
+SimulatorGlobal::SimulatorGlobal(vector<Task *> tasks, int processor_number, bool show_simulation) : SimulatorAbstract(tasks, processor_number, show_simulation)
+{
+    sortTasks();
+
+    for (int i = 0; i < processor_number; i++)
+        free_processor_id.push_back(processor_number - i - 1);
+}
+
 SimulationResult SimulatorGlobal::Simulate()
 {
     bool mustFinish = false;
     schedulable = true;
-
-    chain->setEvent(0, 17); // TO-REMOVE!!!
 
     while (mustFinish == false)
     {
@@ -26,7 +32,7 @@ SimulationResult SimulatorGlobal::Simulate()
 
 void SimulatorGlobal::reassignTasks(vector<Task *> tasks)
 {
-    // remember previous state of each task
+    // memorize previous state of each task
 
     for (unsigned int i = 0; i < tasks.size(); i++)
         tasks.at(i)->MemorizeWorking();
@@ -62,9 +68,9 @@ void SimulatorGlobal::reassignTasks(vector<Task *> tasks)
             processors.at(tasks.at(i)->Processor_id)->Task_id = -1;
 
             if (tasks.at(i)->Left > 0)
-            {
                 processors.at(tasks.at(i)->Processor_id)->Preemtions++;
-            }
+
+            chain->setEvent(i * 3 + 2, -1);
 
             tasks.at(i)->Processor_id = -1;
         }
@@ -159,4 +165,19 @@ bool SimulatorGlobal::processNextEvent(int event)
     }
 
     return false;
+}
+
+void SimulatorGlobal::sortTasks()
+{
+    tasks_sorted = tasks;
+
+    for (unsigned int i = 0; i < tasks_sorted.size() - 1; i++) // sort them by period in ascending order
+        for (unsigned int j = 0; j <= i; j++)
+            if (tasks_sorted.at(j)->getPeriod() > tasks_sorted.at(j + 1)->getPeriod())
+            {
+                Task *change;
+                change = tasks_sorted.at(j);
+                tasks_sorted.at(j) = tasks_sorted.at(j + 1);
+                tasks_sorted.at(j + 1) = change;
+            }
 }

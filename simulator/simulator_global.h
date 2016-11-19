@@ -6,30 +6,13 @@
 #include <iostream>
 
 #include "simulator_abstract.h"
-#include "future_event_chain.h"
 #include "simulation_result.h"
 
 class SimulatorGlobal : public SimulatorAbstract
 {
 public:
 
-    SimulatorGlobal(vector<Task*> tasks, int processor_number, bool show_simulation) : SimulatorAbstract(tasks, processor_number, show_simulation)
-    {
-        vector<int> event;
-        event.push_back(max_offset + 2 * hyper_period);
-
-        for (unsigned int i = 0; i < tasks.size(); i++)
-        {
-            event.push_back(tasks.at(i)->getOffset());
-            event.push_back(-1);
-            event.push_back(-1);
-        }
-
-        for (int i = 0; i < processor_number; i++)
-            free_processor_id.push_back(processor_number - i - 1);
-
-        chain = new FutureEventChain(event);
-    }
+    SimulatorGlobal(vector<Task*> tasks, int processor_number, bool show_simulation);
 
     SimulationResult Simulate() override;
 
@@ -49,9 +32,11 @@ protected:
 
     bool processNextEvent(int event);
 
-    vector<int> free_processor_id;
+    void sortTasks();
 
-    FutureEventChain *chain;
+    vector<int> free_processor_id;    
+
+    vector<Task*> tasks_sorted;
 };
 
 #endif // SIMULATOR_GLOBAL_H
