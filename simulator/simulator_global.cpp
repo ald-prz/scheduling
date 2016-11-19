@@ -69,6 +69,8 @@ void SimulatorGlobal::reassignTasks(vector<Task *> tasks)
 
             if (tasks.at(i)->Left > 0)
                 processors.at(tasks.at(i)->Processor_id)->Preemtions++;
+            else
+                chain->setEvent(i * 3 + 3, -1);
 
             chain->setEvent(i * 3 + 2, -1);
 
