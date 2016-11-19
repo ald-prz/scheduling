@@ -8,28 +8,46 @@ SimulationResult::SimulationResult(vector<Processor *> processors, bool is_sched
     this->Preemtions = 0;
     this->Idle = 0;
 
+
+
     recalculateUtilisations();
 }
 
-void SimulationResult::Print()
+void SimulationResult::Print(char *output_file_path)
 {
+    ofstream file;
+    file.open("result.txt");
+
     if (this->IsSchedulable)
     {
         cout << "[schedulable]=yes" << endl;
+        file << "[schedulable]=yes" << endl;
         cout << "[interval]=[0;" << Simulation_time << "]" << endl;
+        file << "[interval]=[0;" << Simulation_time << "]" << endl;
 
         cout << "[preemtions_total]=" << Preemtions << endl;
-        for (int i = 0; i < Processors.size(); i++)
+        file << "[preemtions_total]=" << Preemtions << endl;
+        for (int i = 0; i < Processors.size(); i++)   
+        {
             cout << "[preemtions_" << i + 1 << "]=" << Processors.at(i)->Preemtions << endl;
-
+            file << "[preemtions_" << i + 1 << "]=" << Processors.at(i)->Preemtions << endl;
+        }
 
         cout << "[idle_total]=" << this->Idle << endl;
+        file << "[idle_total]=" << this->Idle << endl;
         for (int i = 0; i < Processors.size(); i++)
+        {
             cout << "[idle_" << i + 1 << "]=" << Processors.at(i)->Idle << endl;
+            file << "[idle_" << i + 1 << "]=" << Processors.at(i)->Idle << endl;
+        }
 
         cout << "[utilisation_total]=" << Total_utilisation * 100 << endl;
+        file << "[utilisation_total]=" << Total_utilisation * 100 << endl;
         for (int i = 0; i < Processors.size(); i++)
+        {
             cout << "[utilisation_" << i + 1 << "]=" << Processors.at(i)->Utilisation * 100 << endl;
+            file << "[utilisation_" << i + 1 << "]=" << Processors.at(i)->Utilisation * 100 << endl;
+        }
     }
     else
     {
@@ -38,6 +56,9 @@ void SimulationResult::Print()
     }
 
     cout << endl;
+    file << endl;
+
+    file.close();
 }
 
 void SimulationResult::recalculateUtilisations()

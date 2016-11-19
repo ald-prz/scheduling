@@ -3,6 +3,7 @@
 
 #include <vector>
 #include <iostream>
+#include <fstream>
 
 #include "processor.h"
 
@@ -14,7 +15,7 @@ public:
 
     SimulationResult(vector<Processor*> processors, bool is_schedulable, long long simulation_time);
 
-    void Print();
+    void Print(char *output_file_path);
 
     bool IsSchedulable;
 
