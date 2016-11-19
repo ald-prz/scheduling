@@ -25,6 +25,8 @@ public:
 
     void MemorizeWorking();
 
+    void Reset();
+
     /*!
      * \brief Time left to finish the current job
      */

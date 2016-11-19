@@ -6,11 +6,8 @@ Task::Task()
     this->period = 0;
     this->deadline = 0;;
     this->wcet = 0;
-    this->Left = 0;
-    this->IsWorking = false;
-    this->WasWorking = false;
     this->Task_id = -1;
-    this->Processor_id = -1;
+    this->Reset();
 }
 
 Task::Task(long long offset, long long period, long long deadline, long long wcet)
@@ -19,7 +16,8 @@ Task::Task(long long offset, long long period, long long deadline, long long wce
     this->period = period;
     this->deadline = deadline;
     this->wcet = wcet;
-
+    this->Task_id = -1;
+    this->Reset();
 }
 
 long long Task::getOffset() const
@@ -71,4 +69,12 @@ void Task::setWcet(long long value)
 void Task::MemorizeWorking()
 {
     WasWorking = IsWorking;
+}
+
+void Task::Reset()
+{
+    this->Left = 0;
+    this->IsWorking = false;
+    this->WasWorking = false;
+    this->Processor_id = -1;
 }

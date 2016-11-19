@@ -19,13 +19,13 @@ void SimulationResult::Print(char *output_file_path)
 
     if (IsSchedulable)
     {
-        cout << "[schedulable]=yes" << endl;
-        file << "[schedulable]=yes" << endl;
+        cout << "[schedulable_" << Processors.size() << "_processors]=yes" << endl;
+        file << "[schedulable_" << Processors.size() << "_processors]=yes" << endl;
     }
     else
     {
-        cout << "[schedulable]=no" << endl;
-        file << "[schedulable]=no" << endl;
+        cout << "[schedulable_" << Processors.size() << "_processors]=no" << endl;
+        file << "[schedulable_" << Processors.size() << "_processors]=no" << endl;
     }
 
     cout << "[interval]=[0;" << Intended_time << "]" << endl;

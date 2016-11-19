@@ -15,6 +15,7 @@ SimulatorAbstract::SimulatorAbstract(vector<Task *> tasks, int processor_number,
 
     for (unsigned int i = 0; i < tasks.size(); i++)
     {
+        tasks.at(i)->Reset();
         event.push_back(tasks.at(i)->getOffset());
         event.push_back(-1);
         event.push_back(-1);
