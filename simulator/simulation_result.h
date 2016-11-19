@@ -13,7 +13,7 @@ class SimulationResult
 {
 public:
 
-    SimulationResult(vector<Processor*> processors, bool is_schedulable, long long simulation_time);
+    SimulationResult(vector<Processor*> processors, bool is_schedulable, long long simulation_time, long long intended_time);
 
     void Print(char *output_file_path);
 
@@ -24,6 +24,8 @@ public:
     vector<Processor*> Processors;
 
     long long Simulation_time;
+
+    long long Intended_time;
 
     int Preemtions;
 

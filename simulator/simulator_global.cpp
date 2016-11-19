@@ -10,24 +10,29 @@ SimulatorGlobal::SimulatorGlobal(vector<Task *> tasks, int processor_number, boo
 
 SimulationResult SimulatorGlobal::Simulate()
 {
-    bool mustFinish = false;
-    schedulable = true;
-
-    while (mustFinish == false)
+    if (processor.size() > 0)
     {
-        int event = chain->DetermineNextEvent();
+        bool mustFinish = false;
+        schedulable = true;
 
-        recalculateLeft();
+        while (mustFinish == false)
+        {
+            int event = chain->DetermineNextEvent();
 
-        recalculateIdle();
+            recalculateLeft();
 
-        if (this->show_simulation)
-            showSimulationStep();
+            recalculateIdle();
 
-        mustFinish = processNextEvent(event);
+            if (this->show_simulation)
+                showSimulationStep();
+
+            mustFinish = processNextEvent(event);
+        }
     }
+    else
+        schedulable = false;
 
-    return SimulationResult(processor, schedulable, chain->getTime());
+    return SimulationResult(processor, schedulable, chain->getTime(), chain->getEvent(0));
 }
 
 void SimulatorGlobal::reassignTasks(vector<Task *> tasks)

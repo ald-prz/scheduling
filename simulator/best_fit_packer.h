@@ -21,15 +21,15 @@ public:
     {
         vector<double> utilisation_left;
 
-        for (int i = 0; i < processor_num; i++)
+        for (unsigned int i = 0; i < processor_num; i++)
             utilisation_left.push_back(1.0);
 
-        for (int i = 0; i < task.size(); i++)
+        for (unsigned int i = 0; i < task.size(); i++)
         {
             int min_index = -1;
             int min_value = 0.0;
 
-            for (int j = 0; j < processor_num; j++)
+            for (unsigned int j = 0; j < processor_num; j++)
                 if (task.at(i)->Utilisation <= utilisation_left.at(j))
                     if (min_index == -1)
                     {
@@ -51,6 +51,8 @@ public:
                 task.at(i)->Processor_id = min_index;
             }
         }
+
+        return true;
     }
 
 protected:

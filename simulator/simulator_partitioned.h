@@ -26,6 +26,8 @@ protected:
     void reassignTasks(vector<Task*> task);
 
     bool processNextEvent(int event);
+
+    bool packedSuccessfully;
 };
 
 #endif // SIMULATOR_PARTITIONED_H

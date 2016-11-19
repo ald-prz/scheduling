@@ -3,29 +3,34 @@
 SimulatorPartitioned::SimulatorPartitioned(vector<Task *> tasks, int processor_number, bool show_simulation) : SimulatorAbstract(tasks, processor_number, show_simulation)
 {
     BestFitPacker packer(tasks, processor_number);
-    packer.Pack();
+    packedSuccessfully = packer.Pack();
 }
 
 SimulationResult SimulatorPartitioned::Simulate()
 {
-    bool mustFinish = false;
-    schedulable = true;
-
-    while (mustFinish == false)
+    if (packedSuccessfully && (processor.size() > 0))
     {
-        int event = chain->DetermineNextEvent();
+        bool mustFinish = false;
+        schedulable = true;
 
-        recalculateLeft();
+        while (mustFinish == false)
+        {
+            int event = chain->DetermineNextEvent();
 
-        recalculateIdle();
+            recalculateLeft();
 
-        if (this->show_simulation)
-            showSimulationStep();
+            recalculateIdle();
 
-        mustFinish = processNextEvent(event);
+            if (this->show_simulation)
+                showSimulationStep();
+
+            mustFinish = processNextEvent(event);
+        }
     }
+    else
+        schedulable = false;
 
-    return SimulationResult(processor, schedulable, chain->getTime());
+    return SimulationResult(processor, schedulable, chain->getTime(), chain->getEvent(0));
 }
 
 void SimulatorPartitioned::reassignTasks(vector<Task *> tasks)
