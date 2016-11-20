@@ -24,12 +24,26 @@ protected:
      */
     void reassignTasks(vector<Task*> task);
 
+    /*!
+     * \brief Processes next event (simulation end, job start, job end, job deadline missing)
+     * \param Index of the next event
+     * \return Flag if simulation should stop
+     */
     bool processNextEvent(int event);
 
+    /*!
+     * \brief Construct task_sorted index for task vector
+     */
     void sortTasks();
 
+    /*!
+     * \brief Vector of indexes of free processors
+     */
     vector<int> free_processor_id;    
 
+    /*!
+     * \brief Index of sorted tasks
+     */
     vector<Task*> task_sorted;
 };
 

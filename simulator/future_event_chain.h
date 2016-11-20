@@ -5,38 +5,43 @@
 
 using namespace std;
 
+/*!
+ * \brief The FutureEventChain class is used for FEC algorithm implementation
+ */
 class FutureEventChain
 {
 public:
 
     FutureEventChain(vector<int> event);
 
+    /*!
+     * \brief Determines next event and moves the chain to that moment (sets time)
+     * \return Index of the next event in event vector
+     */
     int DetermineNextEvent();
 
-    long long getTime() const
-    {
-        return current_time;
-    }
+    long long getTime() const;
 
-    int getEvent(int index)
-    {
-        return event.at(index);
-    }
+    int getEvent(int index);
 
-    void setEvent(int index, long long time)
-    {
-        event.at(index) = time;
-    }
+    void setEvent(int index, long long time);
 
-    long long Time_difference;
+    /*!
+     * \brief Timespan between current and previous event
+     */
+    long long Timespan;
 
 protected:
 
+    /*!
+     * \brief Vector of time of the next events
+     */
     vector<int> event;
 
-    long long current_time;
-
-    int min_index;
+    /*!
+     * \brief Current simulation time
+     */
+    long long time;
 };
 
 #endif // FUTUREEVENTCHAIN_H

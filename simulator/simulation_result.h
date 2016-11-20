@@ -9,6 +9,9 @@
 
 using namespace std;
 
+/*!
+ * \brief A class instatnce is an object which is returned by any simulator after simulation
+ */
 class SimulationResult
 {
 public:
@@ -34,7 +37,6 @@ public:
 protected:
 
     void recalculateUtilisations();
-
 };
 
 #endif // SIMULATION_RESULT_H

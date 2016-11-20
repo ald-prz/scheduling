@@ -13,7 +13,7 @@ SimulationResult SimulatorGlobal::Simulate()
     if (processor.size() > 0)
     {
         bool mustFinish = false;
-        schedulable = true;
+        is_schedulable = true;
 
         while (mustFinish == false)
         {
@@ -30,9 +30,9 @@ SimulationResult SimulatorGlobal::Simulate()
         }
     }
     else
-        schedulable = false;
+        is_schedulable = false;
 
-    return SimulationResult(processor, schedulable, chain->getTime(), chain->getEvent(0));
+    return SimulationResult(processor, is_schedulable, chain->getTime(), chain->getEvent(0));
 }
 
 void SimulatorGlobal::reassignTasks(vector<Task *> tasks)
@@ -135,7 +135,7 @@ bool SimulatorGlobal::processNextEvent(int event)
 
         if (action == 3)   // job deadline (simulation failed if got here)
         {
-            schedulable = false;
+            is_schedulable = false;
             return true;
         }
     }

@@ -33,20 +33,35 @@ protected:
 
     bool show_simulation;
 
-    bool schedulable;
+    bool is_schedulable;
 
     FutureEventChain *chain;
 
+    /*!
+     * \brief Recalculates how much work left for each job after the passed timespan
+     */
     void recalculateLeft();
 
+    /*!
+     * \brief Adds idles for non-working tasks for the passed timespan
+     */
     void recalculateIdle();
 
+    /*!
+     * \brief Outputs the status of the task distribution of the current step to command line
+     */
     void showSimulationStep();
 
 private:
 
+    /*!
+     * \brief Calculates hyper_period and max_offset
+     */
     void setAttributes();
 
+    /*!
+     * \brief Initializes processor vector
+     */
     void initializeProcessors();
 };
 

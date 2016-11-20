@@ -25,8 +25,16 @@ protected:
      */
     void reassignTasks(vector<Task*> task);
 
+    /*!
+     * \brief Processes next event (simulation end, job start, job end, job deadline missing)
+     * \param Index of the next event
+     * \return Flag if simulation should stop
+     */
     bool processNextEvent(int event);
 
+    /*!
+     * \brief Flag if packing was carried out successully
+     */
     bool packedSuccessfully;
 };
 

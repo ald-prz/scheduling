@@ -3,13 +3,15 @@
 FutureEventChain::FutureEventChain(vector<int> event)
 {
     this->event = event;
-    current_time = 0;
+    time = 0;
 }
 
 int FutureEventChain::DetermineNextEvent()
 {
-    min_index = -1;          // -1 means that no event with positive start time found
+    int min_index = -1;          // -1 means that no event with positive start time found
     long long min_time;
+
+    // determine next event
 
     for (unsigned int i = 0; i < event.size(); i++)
     {
@@ -31,12 +33,33 @@ int FutureEventChain::DetermineNextEvent()
         }
     }
 
+    // not found the next event
+
     if (min_index == -1)
         throw exception();
 
-    Time_difference = event.at(min_index) - current_time;
+    // memorize the timespan
 
-    current_time = event.at(min_index);
+    Timespan = event.at(min_index) - time;
+
+    // move to the next event
+
+    time = event.at(min_index);
 
     return min_index;
+}
+
+long long FutureEventChain::getTime() const
+{
+    return time;
+}
+
+int FutureEventChain::getEvent(int index)
+{
+    return event.at(index);
+}
+
+void FutureEventChain::setEvent(int index, long long time)
+{
+    event.at(index) = time;
 }

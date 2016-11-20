@@ -11,7 +11,7 @@ SimulationResult SimulatorPartitioned::Simulate()
     if (packedSuccessfully && (processor.size() > 0))
     {
         bool mustFinish = false;
-        schedulable = true;
+        is_schedulable = true;
 
         while (mustFinish == false)
         {
@@ -28,9 +28,9 @@ SimulationResult SimulatorPartitioned::Simulate()
         }
     }
     else
-        schedulable = false;
+        is_schedulable = false;
 
-    return SimulationResult(processor, schedulable, chain->getTime(), chain->getEvent(0));
+    return SimulationResult(processor, is_schedulable, chain->getTime(), chain->getEvent(0));
 }
 
 void SimulatorPartitioned::reassignTasks(vector<Task *> tasks)
@@ -133,7 +133,7 @@ bool SimulatorPartitioned::processNextEvent(int event)
 
         if (action == 3)   // job deadline (simulation failed if got here)
         {
-            schedulable = false;
+            is_schedulable = false;
             return true;
         }
     }

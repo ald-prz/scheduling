@@ -26,25 +26,25 @@ SimulatorAbstract::SimulatorAbstract(vector<Task *> tasks, int processor_number,
 
 void SimulatorAbstract::recalculateLeft()
 {
-    if (chain->Time_difference > 0)
+    if (chain->Timespan > 0)
         for (unsigned int i = 0; i < task.size(); i++)
             if ((task.at(i)->Left > 0) && (task.at(i)->IsWorking))
-                task.at(i)->Left -= chain->Time_difference;
+                task.at(i)->Left -= chain->Timespan;
 }
 
 void SimulatorAbstract::recalculateIdle()
 {
-    if (chain->Time_difference > 0)
+    if (chain->Timespan > 0)
         for (unsigned int i = 0; i < processor.size(); i++)
             if (processor.at(i)->Task_id == -1)
-                processor.at(i)->Idle += chain->Time_difference;
+                processor.at(i)->Idle += chain->Timespan;
 }
 
 void SimulatorAbstract::showSimulationStep()
 {
-    if (chain->Time_difference > 0)
+    if (chain->Timespan > 0)
     {
-        cout << "[" << chain->getTime() - chain->Time_difference << ";" << chain->getTime() << "]" << endl;
+        cout << "[" << chain->getTime() - chain->Timespan << ";" << chain->getTime() << "]" << endl;
 
         for (int i = 0; i < processor_num; i++)
             if (processor.at(i)->Task_id != -1)

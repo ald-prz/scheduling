@@ -12,7 +12,9 @@ SOURCES += main.cpp \
     processor.cpp \
     task_reader.cpp \
     simulation_result.cpp \
-    simulator_partitioned.cpp
+    simulator_partitioned.cpp \
+    best_fit_packer.cpp \
+    minimum_determiner.cpp
 
 HEADERS += \
     task.h \
@@ -24,4 +26,5 @@ HEADERS += \
     task_reader.h \
     simulation_result.h \
     best_fit_packer.h \
-    simulator_partitioned.h
+    simulator_partitioned.h \
+    minimum_determiner.h

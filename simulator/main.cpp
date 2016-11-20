@@ -11,6 +11,7 @@
 #include "least_common_multiple.h"
 #include "simulation_result.h"
 #include "best_fit_packer.h"
+#include "minimum_determiner.h"
 
 using namespace std;
 
@@ -31,15 +32,13 @@ int main(int argc, char *argv[])
     vector<Task*> task = task_reader.Read();
 
     SimulatorAbstract *simulator;
-
     if (is_global)
         simulator = new SimulatorGlobal(task, processor_num, show_simulation);
     else
         simulator = new SimulatorPartitioned(task, processor_num, show_simulation);
-
     SimulationResult result = simulator->Simulate();
 
-    int minimum = FindMinimumRequired(task);
+    int minimum = MinimumDeterminer::Determine(task, is_global);
     cout << "[minimum_processors_required]=" << minimum << endl;
 
     result.Print("result.txt");
@@ -49,23 +48,7 @@ int main(int argc, char *argv[])
     return 0;
 }
 
-int FindMinimumRequired(vector<Task*> task)
-{
-    SimulatorAbstract *simulator;
 
-    for (int i = 1; ; i++)
-    {
-        if (is_global)
-            simulator = new SimulatorGlobal(task, i, false);
-        else
-            simulator = new SimulatorPartitioned(task, i, false);
-
-        SimulationResult result = simulator->Simulate();
-
-        if (result.IsSchedulable)
-            return i;
-    }
-}
 
 void GetArguments(int argc, char *argv[])
 {
