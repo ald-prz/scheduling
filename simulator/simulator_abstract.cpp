@@ -24,12 +24,6 @@ SimulatorAbstract::SimulatorAbstract(vector<Task *> tasks, int processor_number,
     chain = new FutureEventChain(event);
 }
 
-SimulatorAbstract::~SimulatorAbstract()
-{
-    for (unsigned int i = 0; i < task.size(); i++)
-        delete task.at(i);
-}
-
 void SimulatorAbstract::recalculateLeft()
 {
     if (chain->Time_difference > 0)

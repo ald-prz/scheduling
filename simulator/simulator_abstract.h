@@ -19,8 +19,6 @@ public:
 
     virtual SimulationResult Simulate() = 0;
 
-    ~SimulatorAbstract();
-
 protected:
 
     vector<Task*> task;

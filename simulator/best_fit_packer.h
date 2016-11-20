@@ -57,7 +57,7 @@ public:
 
 protected:
 
-    int processor_num;
+    unsigned int processor_num;
 
     vector<Task*> task;
 };

@@ -1,6 +1,7 @@
 #include <iostream>
 #include <string.h>
 #include <vector>
+#include <stdlib.h>
 
 #include "simulator_abstract.h"
 #include "simulator_global.h"
@@ -19,13 +20,15 @@ int processor_num;
 bool show_simulation;
 
 void GetArguments(int argc, char *argv[]);
+int FindMinimumRequired(vector<Task*> task);
+
 
 int main(int argc, char *argv[])
 {
     GetArguments(argc, argv);
 
-    TaskReader task_loader(task_file_address);
-    vector<Task*> task = task_loader.Read();
+    TaskReader task_reader(task_file_address);
+    vector<Task*> task = task_reader.Read();
 
     SimulatorAbstract *simulator;
 
@@ -35,6 +38,10 @@ int main(int argc, char *argv[])
         simulator = new SimulatorPartitioned(task, processor_num, show_simulation);
 
     SimulationResult result = simulator->Simulate();
+
+    int minimum = FindMinimumRequired(task);
+    cout << "[minimum_processors_required]=" << minimum << endl;
+
     result.Print("result.txt");
 
     cout << "finished" << endl;
@@ -42,6 +49,23 @@ int main(int argc, char *argv[])
     return 0;
 }
 
+int FindMinimumRequired(vector<Task*> task)
+{
+    SimulatorAbstract *simulator;
+
+    for (int i = 1; ; i++)
+    {
+        if (is_global)
+            simulator = new SimulatorGlobal(task, i, false);
+        else
+            simulator = new SimulatorPartitioned(task, i, false);
+
+        SimulationResult result = simulator->Simulate();
+
+        if (result.IsSchedulable)
+            return i;
+    }
+}
 
 void GetArguments(int argc, char *argv[])
 {

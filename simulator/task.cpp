@@ -18,6 +18,9 @@ Task::Task(long long offset, long long period, long long deadline, long long wce
     this->wcet = wcet;
     this->Task_id = -1;
     this->Reset();
+
+    if ((wcet > deadline) || (deadline > period))
+        throw exception();
 }
 
 long long Task::getOffset() const

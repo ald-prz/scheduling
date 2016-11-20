@@ -1,6 +1,10 @@
 #ifndef TASK_H
 #define TASK_H
 
+#include <exception>
+
+using namespace std;
+
 class Task
 {
 public:
