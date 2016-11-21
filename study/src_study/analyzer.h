@@ -10,6 +10,7 @@
 #include "src_simulator/simulator_global.h"
 #include "src_simulator/minimum_determiner.h"
 #include "src_study/task.h"
+#include "src_study/test_plan.h"
 
 
 using namespace std;
@@ -18,10 +19,13 @@ class Analyzer
 {
 public:
 
-    Analyzer()
+    Analyzer(TestPlan plan)
     {
-        utilisation = {1.0, 5.0, 10.0, 25.0, 50.0, 75.0, 90.0, 95.0, 99.0, 100.0};
-        task_num = {1, 5, 10};
+        this->processor_num = plan.processor_num;
+        this->utilisation = plan.utilisation;
+        this->task_num = plan.task_num;
+
+        // allocate test result matrixes
 
         vector<double> row_double;
         vector<int> row_int;
@@ -54,10 +58,21 @@ public:
                 Configuration c(utilisation.at(j), task_num.at(i), "");
                 Generator generator(&c);
                 vector<Task *> task = generator.Generate();
+
                 min = MinimumDeterminer::Determine(task, true);
                 processor_g.at(i).at(j) = min;
                 min = MinimumDeterminer::Determine(task, false);
                 processor_p.at(i).at(j) = min;
+
+                SimulatorGlobal global(task, processor_num, false);
+                SimulationResult result = global.Simulate();
+                load_g.at(i).at(j) = result.Total_utilisation;
+                schedulable_g.at(i).at(j) = result.IsSchedulable;
+
+                SimulatorPartitioned partitioned(task, processor_num, false);
+                result = partitioned.Simulate();
+                load_p.at(i).at(j) = result.Total_utilisation;
+                schedulable_p.at(i).at(j) = result.IsSchedulable;
             }
 
         int remove = 1;
@@ -65,6 +80,7 @@ public:
 
 protected:
 
+    int processor_num;
     vector<double> utilisation;
     vector<int> task_num;
 

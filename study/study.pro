@@ -41,4 +41,5 @@ HEADERS += \
     src_simulator/simulator_partitioned.h \
     src_simulator/task_reader.h \
     src_study/task.h \
-    src_study/analyzer.h
+    src_study/analyzer.h \
+    src_study/test_plan.h
