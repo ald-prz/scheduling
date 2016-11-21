@@ -1,11 +1,16 @@
 #ifndef TASK_H
 #define TASK_H
 
+#include <exception>
+
+using namespace std;
+
 class Task
 {
 public:
 
     Task();
+
     Task(long long offset, long long period, long long deadline, long long wcet);
 
     long long getOffset() const;
@@ -19,6 +24,31 @@ public:
 
     long long getWcet() const;
     void setWcet(long long value);
+
+    double Utilisation;
+
+    void MemorizeWorking();
+
+    void Reset();
+
+    /*!
+     * \brief Time left to finish the current job
+     */
+    long long Left;
+
+    /*!
+     * \brief Is currently working
+     */
+    bool IsWorking;
+
+    /*!
+     * \brief Was working at previous step
+     */
+    bool WasWorking;
+
+    long long Processor_id;
+
+    long long Task_id;
 
 private:
 
