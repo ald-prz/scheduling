@@ -149,7 +149,7 @@ void SimulatorGlobal::sortTasks()
 
     for (unsigned int i = 0; i < task_sorted.size() - 1; i++) // sort them by period in ascending order
         for (unsigned int j = 0; j <= i; j++)
-            if (task_sorted.at(j)->getPeriod() > task_sorted.at(j + 1)->getPeriod())
+            if (task_sorted.at(j)->getDeadline() > task_sorted.at(j + 1)->getDeadline())
             {
                 Task *change;
                 change = task_sorted.at(j);

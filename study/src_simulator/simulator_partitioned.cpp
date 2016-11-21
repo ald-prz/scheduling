@@ -50,7 +50,7 @@ void SimulatorPartitioned::reassignTasks(vector<Task *> tasks)
     for (unsigned int i = 0; i < processor.size(); i++)
     {
         int index = -1;
-        int min_period;
+        int min_deadline;
 
         // find an appropriate task for [i] processor
 
@@ -58,16 +58,16 @@ void SimulatorPartitioned::reassignTasks(vector<Task *> tasks)
             if ((tasks.at(j)->Processor_id == i) && (tasks.at(j)->Left > 0))
                 if (index != -1)
                 {
-                    if (tasks.at(j)->getPeriod() < min_period)
+                    if (tasks.at(j)->getDeadline() < min_deadline)
                     {
                         index = j;
-                        min_period = tasks.at(j)->getPeriod();
+                        min_deadline = tasks.at(j)->getDeadline();
                     }
                 }
                 else
                 {
                     index = j;
-                    min_period = tasks.at(j)->getPeriod();
+                    min_deadline = tasks.at(j)->getDeadline();
                 }
 
         // assign the task to the processor if found
