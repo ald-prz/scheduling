@@ -4,7 +4,7 @@ int MinimumDeterminer::Determine(vector<Task *> task, bool is_global)
 {
     SimulatorAbstract *simulator;
 
-    for (int i = 1; ; i++)
+    for (int i = 1; i <= task.size(); i++) // increment processor number until feasible
     {
         if (is_global)
             simulator = new SimulatorGlobal(task, i, false);
@@ -16,4 +16,8 @@ int MinimumDeterminer::Determine(vector<Task *> task, bool is_global)
         if (result.IsSchedulable)
             return i;
     }
+
+    // if [task.size] processors is not enough then not feasible
+
+    return -1;
 }

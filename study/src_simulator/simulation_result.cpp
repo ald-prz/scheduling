@@ -60,7 +60,7 @@ void SimulationResult::Print(char *output_file_path)
 
     for (unsigned int i = 0; i < Processors.size(); i++)
     {
-        if (Processors.at(i)->Utilisation > 0.0)
+        if (Processors.at(i)->Utilisation >= 0.0)
         {
             cout << "[utilisation_" << i << "]=" << Processors.at(i)->Utilisation * 100 << endl;
             file << "[utilisation_" << i << "]=" << Processors.at(i)->Utilisation * 100 << endl;

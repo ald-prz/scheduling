@@ -39,7 +39,11 @@ int main(int argc, char *argv[])
     SimulationResult result = simulator->Simulate();
 
     int minimum = MinimumDeterminer::Determine(task, is_global);
-    cout << "[minimum_processors_required]=" << minimum << endl;
+
+    if (minimum > 0)
+        cout << "[minimum_processors_required]=" << minimum << endl;
+    else
+        cout << "[minimum_processors_required]=never feasible" << endl;
 
     result.Print("result.txt");
 

@@ -46,6 +46,7 @@ public:
 
     void Analyze()
     {
+        int min;
 
         for (int i = 0; i < task_num.size(); i++)
             for (int j = 0; j < utilisation.size(); j++)
@@ -53,11 +54,13 @@ public:
                 Configuration c(utilisation.at(j), task_num.at(i), "");
                 Generator generator(&c);
                 vector<Task *> task = generator.Generate();
-                int min = MinimumDeterminer::Determine(task, true);
+                min = MinimumDeterminer::Determine(task, true);
                 processor_g.at(i).at(j) = min;
+                min = MinimumDeterminer::Determine(task, false);
+                processor_p.at(i).at(j) = min;
             }
 
-
+        int remove = 1;
     }
 
 protected:
