@@ -92,7 +92,7 @@ void SimulatorGlobal::reassignTasks(vector<Task *> tasks)
             tasks.at(i)->Processor_id = free_processor_id[free_processor_id.size() - 1];
             free_processor_id.pop_back();
 
-            processor.at(tasks.at(i)->Processor_id)->Task_id = tasks.at(i)->Task_id;
+            processor.at(tasks.at(i)->Processor_id)->Task_id = i;
 
             if (tasks.at(i)->Left > 0)
                 chain->setEvent(i * 3 + 2, chain->getTime() + tasks.at(i)->Left);
