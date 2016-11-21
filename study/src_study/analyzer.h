@@ -1,7 +1,7 @@
 #ifndef ANALYZER_H
 #define ANALYZER_H
 
-#include <stdlib.h>
+#include <fstream>
 #include <vector>
 
 #include "src_generator/configuration.h"
@@ -74,8 +74,85 @@ public:
                 load_p.at(i).at(j) = result.Total_utilisation;
                 schedulable_p.at(i).at(j) = result.IsSchedulable;
             }
+    }
 
-        int remove = 1;
+    void OutputToFile(char *output_file_path)
+    {
+        ofstream file;
+        file.open(output_file_path);
+
+        file << "-------------------[utilisation]----------------------" << endl;
+
+        for (int i = 0; i < utilisation.size(); i++)
+            file << utilisation.at(i) << endl;
+
+        file << "-------------------[load][global]----------------------" << endl;
+
+        for (int i = 0; i < task_num.size(); i++)
+        {
+            file << "[task_num]=" << task_num.at(i) << endl;
+
+            for (int j = 0; j < utilisation.size(); j++)
+                file << load_g.at(i).at(j) << endl;
+        }
+
+        file << "-------------------[load][partitioned]----------------------" << endl;
+
+        for (int i = 0; i < task_num.size(); i++)
+        {
+            file << "[task_num]=" << task_num.at(i) << endl;
+
+            for (int j = 0; j < utilisation.size(); j++)
+                file << load_p.at(i).at(j) << endl;
+        }
+
+        file << "-------------------[minimal_processors][global]----------------------" << endl;
+
+        for (int i = 0; i < task_num.size(); i++)
+        {
+            file << "[task_num]=" << task_num.at(i) << endl;
+
+            for (int j = 0; j < utilisation.size(); j++)
+                file << processor_g.at(i).at(j) << endl;
+        }
+
+        file << "-------------------[minimal_processors][partitioned]----------------------" << endl;
+
+        for (int i = 0; i < task_num.size(); i++)
+        {
+            file << "[task_num]=" << task_num.at(i) << endl;
+
+            for (int j = 0; j < utilisation.size(); j++)
+                file << processor_p.at(i).at(j) << endl;
+        }
+
+        file << "-------------------[schedulable][global]----------------------" << endl;
+
+        for (int i = 0; i < task_num.size(); i++)
+        {
+            file << "[task_num]=" << task_num.at(i) << endl;
+
+            for (int j = 0; j < utilisation.size(); j++)
+                if (schedulable_g.at(i).at(j))
+                    file << "yes" << endl;
+                else
+                    file << "no" << endl;
+        }
+
+        file << "-------------------[schedulable][partitioned]----------------------" << endl;
+
+        for (int i = 0; i < task_num.size(); i++)
+        {
+            file << "[task_num]=" << task_num.at(i) << endl;
+
+            for (int j = 0; j < utilisation.size(); j++)
+                if (schedulable_p.at(i).at(j))
+                    file << "yes" << endl;
+                else
+                    file << "no" << endl;
+        }
+
+        file.close();
     }
 
 protected:
