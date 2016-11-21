@@ -118,6 +118,12 @@ bool SimulatorGlobal::processNextEvent(int event)
 
         if (action == 1)   // job start
         {
+            if (chain->getEvent(index * 3 + 3) > 0)
+            {
+                is_schedulable = false;
+                return true;
+            }
+
             task.at(index)->Left = task.at(index)->getWcet();
             chain->setEvent(index * 3 + 1, chain->getTime() + task.at(index)->getPeriod());
             chain->setEvent(index * 3 + 3, chain->getTime() + task.at(index)->getDeadline());
