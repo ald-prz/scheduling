@@ -8,6 +8,8 @@ SimulatorPartitioned::SimulatorPartitioned(vector<Task *> tasks, int processor_n
 
 SimulationResult SimulatorPartitioned::Simulate()
 {
+    this->set();
+
     if (packedSuccessfully && (processor.size() > 0))
     {
         bool mustFinish = false;
@@ -145,4 +147,14 @@ bool SimulatorPartitioned::processNextEvent(int event)
     }
 
     return false;
+}
+
+void SimulatorPartitioned::calculateMaxOffset()
+{
+
+}
+
+void SimulatorPartitioned::calculateHyperperiod()
+{
+
 }

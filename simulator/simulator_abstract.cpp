@@ -6,22 +6,7 @@ SimulatorAbstract::SimulatorAbstract(vector<Task *> tasks, int processor_number,
     this->processor_num = processor_number;
     this->show_simulation = show_simulation;
 
-    setAttributes();
 
-    initializeProcessors();
-
-    vector<int> event;
-    event.push_back(max_offset + 2 * hyper_period);
-
-    for (unsigned int i = 0; i < tasks.size(); i++)
-    {
-        tasks.at(i)->Reset();
-        event.push_back(tasks.at(i)->getOffset());
-        event.push_back(-1);
-        event.push_back(-1);
-    }
-
-    chain = new FutureEventChain(event);
 }
 
 void SimulatorAbstract::recalculateLeft()
@@ -54,26 +39,6 @@ void SimulatorAbstract::showSimulationStep()
 
         cout << endl;
     }
-}
-
-void SimulatorAbstract::setAttributes()
-{
-    vector<long long> periods;
-    vector<long long> offsets;
-
-    for (unsigned int i = 0; i < task.size(); i++)
-    {
-        periods.push_back(task[i]->getPeriod());
-        offsets.push_back(task[i]->getOffset());
-    }
-
-    this->hyper_period = LeastCommonMultiple::Calculate(periods);
-
-    this->max_offset = offsets.at(0);
-
-    for (unsigned int i = 1; i < offsets.size(); i++)
-        if (max_offset < offsets.at(i))
-            max_offset = offsets.at(i);
 }
 
 void SimulatorAbstract::initializeProcessors()

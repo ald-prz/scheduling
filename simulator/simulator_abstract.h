@@ -27,10 +27,6 @@ protected:
 
     int processor_num;
 
-    long long hyper_period;
-
-    long long max_offset;
-
     bool show_simulation;
 
     bool is_schedulable;
@@ -52,12 +48,38 @@ protected:
      */
     void showSimulationStep();
 
-private:
+    void set()
+    {
+        initializeProcessors();
+
+        this->calculateMaxOffset();
+        this->calculateHyperperiod();
+
+        vector<int> event;
+
+        for (unsigned int i = 0; i < processor.size(); i++)
+            event.push_back(processor.at(i)->Max_offset + 2 * processor.at(i)->Hyper_period);
+
+        for (unsigned int i = 0; i < task.size(); i++)
+        {
+            task.at(i)->Reset();
+            event.push_back(task.at(i)->getOffset());
+            event.push_back(-1);
+            event.push_back(-1);
+        }
+
+        chain = new FutureEventChain(event);
+    }
 
     /*!
-     * \brief Calculates hyper_period and max_offset
+     * \brief Calculates max_offset
      */
-    void setAttributes();
+    virtual void calculateMaxOffset() = 0;
+
+    /*!
+     * \brief Calculates hyper_period
+     */
+    virtual void calculateHyperperiod() = 0;
 
     /*!
      * \brief Initializes processor vector

@@ -32,6 +32,11 @@ protected:
      */
     bool processNextEvent(int event);
 
+
+    void calculateMaxOffset() override;
+
+    void calculateHyperperiod() override;
+
     /*!
      * \brief Flag if packing was carried out successully
      */

@@ -16,6 +16,10 @@ public:
     long long Preemtions;
 
     int Task_id;
+
+    long long Hyper_period;
+
+    long long Max_offset;
 };
 
 #endif // PROCESSOR_H
