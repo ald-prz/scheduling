@@ -26,8 +26,11 @@ void SimulationResult::Print(char *output_file_path)
         file << "[is_schedulable_for_" << Processors.size() << "_processors]=no" << endl;
     }
 
-    //cout << "[interval]=[0;" << Intended_time << "]" << endl;
-    //file << "[interval]=[0;" << Intended_time << "]" << endl;
+    for (unsigned int i = 0; i < Processors.size(); i++)
+    {
+        cout << "[interval_" << i << "]=[0;" << Processors.at(i)->Intended_time << "]" << endl;
+        file << "[interval_" << i << "]=[0;" << Processors.at(i)->Intended_time << "]" << endl;
+    }
 
     cout << "[preemtions_total]=" << Preemtions << endl;
     file << "[preemtions_total]=" << Preemtions << endl;
