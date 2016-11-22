@@ -20,6 +20,10 @@ public:
     long long Hyper_period;
 
     long long Max_offset;
+
+    long long Simulation_time; // actual simulation time
+
+    long long Intended_time; // interval I
 };
 
 #endif // PROCESSOR_H

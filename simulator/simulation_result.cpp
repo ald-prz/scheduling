@@ -4,8 +4,6 @@ SimulationResult::SimulationResult(vector<Processor*> processors, bool is_schedu
 {
     this->IsSchedulable = is_schedulable;
     this->Processors = processors;
-    this->Simulation_time = simulation_time;
-    this->Intended_time = intended_time;
     this->Preemtions = 0;
     this->Idle = 0;
 
@@ -28,8 +26,8 @@ void SimulationResult::Print(char *output_file_path)
         file << "[is_schedulable_for_" << Processors.size() << "_processors]=no" << endl;
     }
 
-    cout << "[interval]=[0;" << Intended_time << "]" << endl;
-    file << "[interval]=[0;" << Intended_time << "]" << endl;
+    //cout << "[interval]=[0;" << Intended_time << "]" << endl;
+    //file << "[interval]=[0;" << Intended_time << "]" << endl;
 
     cout << "[preemtions_total]=" << Preemtions << endl;
     file << "[preemtions_total]=" << Preemtions << endl;
@@ -81,21 +79,25 @@ void SimulationResult::Print(char *output_file_path)
 void SimulationResult::recalculateUtilisations()
 {
     long long sum = 0;
+    long long total_simulation = 0;
 
-    if (Simulation_time > 0.0)
+    for (unsigned int i = 0; i < Processors.size(); i++)
     {
-        for (unsigned int i = 0; i < Processors.size(); i++)
+        if (Processors.at(i)->Simulation_time > 0.0)
         {
-            Processors.at(i)->Utilisation = ((double)(Simulation_time - Processors.at(i)->Idle)) / Simulation_time;
-            sum += Simulation_time - Processors.at(i)->Idle;
+            total_simulation += Processors.at(i)->Simulation_time;
+            Processors.at(i)->Utilisation = ((double)(Processors.at(i)->Simulation_time - Processors.at(i)->Idle)) / Processors.at(i)->Simulation_time;
+            sum += Processors.at(i)->Simulation_time - Processors.at(i)->Idle;
             this->Preemtions += Processors.at(i)->Preemtions;
             this->Idle += Processors.at(i)->Idle;
         }
+        else
+        {
+            Total_utilisation = -1.0;
+            break;
+        }
+    }
 
-        Total_utilisation = ((double)sum) / (Processors.size() * Simulation_time);
-    }
-    else
-    {
-        Total_utilisation = -1.0;
-    }
+    Total_utilisation = ((double)sum) / total_simulation;
+
 }

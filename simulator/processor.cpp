@@ -7,4 +7,7 @@ Processor::Processor(int id)
     Utilisation = -1.0;
     Preemtions = 0;
     Task_id = -1;
+    Hyper_period = -1;
+    Simulation_time = -1;
+    Intended_time = -1;
 }

@@ -38,7 +38,7 @@ int main(int argc, char *argv[])
         simulator = new SimulatorPartitioned(task, processor_num, show_simulation);
     SimulationResult result = simulator->Simulate();
 
-    int minimum = 0;//MinimumDeterminer::Determine(task, is_global);
+    int minimum = MinimumDeterminer::Determine(task, is_global);
 
     if (minimum > 0)
         cout << "[minimum_processors_required]=" << minimum << endl;

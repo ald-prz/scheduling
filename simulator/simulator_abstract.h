@@ -48,28 +48,10 @@ protected:
      */
     void showSimulationStep();
 
-    void set()
-    {
-        initializeProcessors();
-
-        this->calculateMaxOffset();
-        this->calculateHyperperiod();
-
-        vector<int> event;
-
-        for (unsigned int i = 0; i < processor.size(); i++)
-            event.push_back(processor.at(i)->Max_offset + 2 * processor.at(i)->Hyper_period);
-
-        for (unsigned int i = 0; i < task.size(); i++)
-        {
-            task.at(i)->Reset();
-            event.push_back(task.at(i)->getOffset());
-            event.push_back(-1);
-            event.push_back(-1);
-        }
-
-        chain = new FutureEventChain(event);
-    }
+    /*!
+     * \brief Preparation before simulation (initializes processors, calculates Max_offests and Hyper_periods, sets events
+     */
+    void set();
 
     /*!
      * \brief Calculates max_offset

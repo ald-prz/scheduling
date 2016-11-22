@@ -5,8 +5,6 @@ SimulatorAbstract::SimulatorAbstract(vector<Task *> tasks, int processor_number,
     this->task = tasks;
     this->processor_num = processor_number;
     this->show_simulation = show_simulation;
-
-
 }
 
 void SimulatorAbstract::recalculateLeft()
@@ -21,8 +19,15 @@ void SimulatorAbstract::recalculateIdle()
 {
     if (chain->Timespan > 0)
         for (unsigned int i = 0; i < processor.size(); i++)
-            if (processor.at(i)->Task_id == -1)
-                processor.at(i)->Idle += chain->Timespan;
+        {
+            if (chain->getEvent(i) >= 0)
+            {
+                if (processor.at(i)->Task_id == -1)
+                    processor.at(i)->Idle += chain->Timespan;
+
+                processor.at(i)->Simulation_time = chain->getTime();
+            }
+        }
 }
 
 void SimulatorAbstract::showSimulationStep()
@@ -39,6 +44,33 @@ void SimulatorAbstract::showSimulationStep()
 
         cout << endl;
     }
+}
+
+void SimulatorAbstract::set()
+{
+    initializeProcessors();
+
+    this->calculateMaxOffset();
+    this->calculateHyperperiod();
+
+    vector<int> event;
+
+    for (unsigned int i = 0; i < processor.size(); i++)
+        if (processor.at(i)->Hyper_period >= 0)
+        {
+            event.push_back(processor.at(i)->Max_offset + 2 * processor.at(i)->Hyper_period);
+            processor.at(i)->Intended_time = processor.at(i)->Max_offset + 2 * processor.at(i)->Hyper_period;
+        }
+
+    for (unsigned int i = 0; i < task.size(); i++)
+    {
+        task.at(i)->Reset();
+        event.push_back(task.at(i)->getOffset());
+        event.push_back(-1);
+        event.push_back(-1);
+    }
+
+    chain = new FutureEventChain(event);
 }
 
 void SimulatorAbstract::initializeProcessors()

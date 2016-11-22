@@ -1,11 +1,17 @@
 #include "simulator_global.h"
 
-SimulatorGlobal::SimulatorGlobal(vector<Task *> tasks, int processor_number, bool show_simulation) : SimulatorAbstract(tasks, processor_number, show_simulation)
+SimulatorGlobal::SimulatorGlobal(vector<Task *> task, int processor_number, bool show_simulation) : SimulatorAbstract(task, processor_number, show_simulation)
 {
     sortTasks();
 
     for (int i = 0; i < processor_number; i++)
         free_processor_id.push_back(processor_number - i - 1);
+
+
+    // Global DM must not have task pre-assignment over the processors
+
+    for (int i = 0; i < task.size(); i++)
+        task.at(i)->Processor_id = -1;
 }
 
 SimulationResult SimulatorGlobal::Simulate()

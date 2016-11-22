@@ -26,10 +26,6 @@ public:
 
     vector<Processor*> Processors;
 
-    long long Simulation_time;
-
-    long long Intended_time;
-
     int Preemtions;
 
     long long Idle;
