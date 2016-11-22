@@ -146,7 +146,7 @@ bool SimulatorPartitioned::processNextEvent(int event)
 
     if (action == 1)   // job start
     {
-        if (chain->getEvent(processor.size() + index * 3 + 2) > 0)
+        if (chain->getEvent(processor.size() + index * 3 + 0) < chain->getEvent(processor.size() + index * 3 + 2))
         {
             is_schedulable = false;
             return true;
