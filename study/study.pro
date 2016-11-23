@@ -8,7 +8,6 @@ SOURCES += main.cpp \
     src_generator/exception_input.cpp \
     src_generator/generator.cpp \
     src_generator/generator_abstract.cpp \
-    src_generator/input_recognizer.cpp \
     src_generator/output_writer.cpp \
     src_simulator/best_fit_packer.cpp \
     src_simulator/future_event_chain.cpp \
@@ -27,8 +26,6 @@ HEADERS += \
     src_generator/exception_input.h \
     src_generator/generator.h \
     src_generator/generator_abstract.h \
-    src_generator/input_recognizer.h \
-    src_generator/input_recognizer_abstract.h \
     src_generator/output_writer.h \
     src_simulator/best_fit_packer.h \
     src_simulator/future_event_chain.h \

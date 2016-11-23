@@ -11,5 +11,10 @@ Configuration* InputRecognizer::Recognize(int argc, char *argv[])
     else if (strcmp(argv[5], "-o") != 0)
         throw ExceptionInput("-o flag is missing\n");
     else
-        return new Configuration(atof(argv[2]), atoi(argv[4]), argv[6]);
+    {
+        if (argc >= 9)
+            return new Configuration(atof(argv[2]), atoi(argv[4]), argv[6], atof(argv[8]));
+        else
+            return new Configuration(atof(argv[2]), atoi(argv[4]), argv[6], -1.0);
+    }
 }

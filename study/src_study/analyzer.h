@@ -55,7 +55,7 @@ public:
         for (int i = 0; i < task_num.size(); i++)
             for (int j = 0; j < utilisation.size(); j++)
             {
-                Configuration c(utilisation.at(j), task_num.at(i), "");
+                Configuration c(utilisation.at(j), task_num.at(i), "", 100.0);
                 Generator generator(&c);
                 vector<Task *> task = generator.Generate();
 

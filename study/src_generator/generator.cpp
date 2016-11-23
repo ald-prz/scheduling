@@ -9,16 +9,12 @@ vector<Task *> Generator::Generate()
 {
     double min_offset = 0.0, max_offset = 100.0;
     double deviation = 0.5;
-    double average_wcet = 100.0; // the more it is, the more precise total utilisation will be
     double period;
 
     if (configuration->getUtilisation() > 0.0)
-        period = average_wcet * configuration->getTaskNumber() / configuration->getUtilisation() * 100;
+        period = configuration->getAverageWcet() * configuration->getTaskNumber() / configuration->getUtilisation() * 100;
     else
-    {
         period = 10.0;
-        average_wcet = 0.0;
-    }
 
     // generating offsets
 
