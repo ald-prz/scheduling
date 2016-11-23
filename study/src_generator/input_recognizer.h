@@ -1,7 +1,6 @@
 #ifndef INPUTRECOGNIZER_H
 #define INPUTRECOGNIZER_H
 
-//#include <string>
 #include <string.h>
 
 #include "exception_input.h"

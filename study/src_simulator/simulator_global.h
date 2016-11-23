@@ -7,7 +7,6 @@
 
 #include "simulator_abstract.h"
 #include "simulation_result.h"
-#include "src_study/task.h"
 
 class SimulatorGlobal : public SimulatorAbstract
 {
@@ -37,6 +36,10 @@ protected:
      */
     void sortTasks();
 
+    void calculateMaxOffset() override;
+
+    void calculateHyperperiod() override;
+
     /*!
      * \brief Vector of indexes of free processors
      */
@@ -46,6 +49,10 @@ protected:
      * \brief Index of sorted tasks
      */
     vector<Task*> task_sorted;
+
+    long long max_offset;
+
+    long long hyper_period;
 };
 
 #endif // SIMULATOR_GLOBAL_H

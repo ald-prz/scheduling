@@ -56,11 +56,10 @@ void SimulatorAbstract::set()
     vector<int> event;
 
     for (unsigned int i = 0; i < processor.size(); i++)
-        if (processor.at(i)->Hyper_period >= 0)
-        {
-            event.push_back(processor.at(i)->Max_offset + 2 * processor.at(i)->Hyper_period);
-            processor.at(i)->Intended_time = processor.at(i)->Max_offset + 2 * processor.at(i)->Hyper_period;
-        }
+    {
+        processor.at(i)->Intended_time = processor.at(i)->Max_offset + 2 * processor.at(i)->Hyper_period;
+        event.push_back(processor.at(i)->Max_offset + 2 * processor.at(i)->Hyper_period);
+    }
 
     for (unsigned int i = 0; i < task.size(); i++)
     {

@@ -27,10 +27,6 @@ protected:
 
     int processor_num;
 
-    long long hyper_period;
-
-    long long max_offset;
-
     bool show_simulation;
 
     bool is_schedulable;
@@ -52,12 +48,20 @@ protected:
      */
     void showSimulationStep();
 
-private:
+    /*!
+     * \brief Preparation before simulation (initializes processors, calculates Max_offests and Hyper_periods, sets events
+     */
+    void set();
 
     /*!
-     * \brief Calculates hyper_period and max_offset
+     * \brief Calculates max_offset
      */
-    void setAttributes();
+    virtual void calculateMaxOffset() = 0;
+
+    /*!
+     * \brief Calculates hyper_period
+     */
+    virtual void calculateHyperperiod() = 0;
 
     /*!
      * \brief Initializes processor vector

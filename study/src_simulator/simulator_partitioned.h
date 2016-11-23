@@ -8,7 +8,6 @@
 #include "simulator_abstract.h"
 #include "simulation_result.h"
 #include "best_fit_packer.h"
-#include "src_study/task.h"
 
 class SimulatorPartitioned : public SimulatorAbstract
 {
@@ -32,6 +31,11 @@ protected:
      * \return Flag if simulation should stop
      */
     bool processNextEvent(int event);
+
+
+    void calculateMaxOffset() override;
+
+    void calculateHyperperiod() override;
 
     /*!
      * \brief Flag if packing was carried out successully

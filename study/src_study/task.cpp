@@ -79,5 +79,5 @@ void Task::Reset()
     this->Left = 0;
     this->IsWorking = false;
     this->WasWorking = false;
-    this->Processor_id = -1;
+    //this->Processor_id = -1;
 }
