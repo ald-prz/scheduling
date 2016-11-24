@@ -19,7 +19,9 @@ SOURCES += main.cpp \
     src_simulator/simulator_global.cpp \
     src_simulator/simulator_partitioned.cpp \
     src_simulator/task_reader.cpp \
-    src_study/task.cpp
+    src_study/task.cpp \
+    src_study/test_plan.cpp \
+    src_study/analyzer.cpp
 
 HEADERS += \
     src_generator/configuration.h \

@@ -84,12 +84,15 @@ void SimulationResult::recalculateUtilisations()
     long long sum = 0;
     long long total_simulation = 0;
 
+    Total_utilisation = 0.0;
+
     for (unsigned int i = 0; i < Processors.size(); i++)
     {
         if (Processors.at(i)->Simulation_time > 0.0)
         {
             total_simulation += Processors.at(i)->Simulation_time;
             Processors.at(i)->Utilisation = ((double)(Processors.at(i)->Simulation_time - Processors.at(i)->Idle)) / Processors.at(i)->Simulation_time;
+            Total_utilisation += Processors.at(i)->Utilisation;
             sum += Processors.at(i)->Simulation_time - Processors.at(i)->Idle;
             this->Preemtions += Processors.at(i)->Preemtions;
             this->Idle += Processors.at(i)->Idle;
@@ -100,7 +103,4 @@ void SimulationResult::recalculateUtilisations()
             break;
         }
     }
-
-    Total_utilisation = ((double)sum) / total_simulation;
-
 }
