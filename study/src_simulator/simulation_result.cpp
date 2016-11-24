@@ -97,10 +97,5 @@ void SimulationResult::recalculateUtilisations()
             this->Preemtions += Processors.at(i)->Preemtions;
             this->Idle += Processors.at(i)->Idle;
         }
-        else
-        {
-            Total_utilisation = -1.0;
-            break;
-        }
     }
 }
