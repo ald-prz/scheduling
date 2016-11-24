@@ -44,6 +44,8 @@ vector<Task *> Generator::Generate()
         if ((min_utilisation_2 > 0.0) && (min_utilisation < min_utilisation_2))
             min_utilisation = min_utilisation_2;
 
+        // max generation range essential limits checking
+
         double max_utilisation = utilisation_left / n * (1.0 + deviation);
 
         if (max_utilisation < 0.0)
