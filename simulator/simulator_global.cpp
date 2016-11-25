@@ -152,6 +152,8 @@ bool SimulatorGlobal::processNextEvent(int event)
     {
         chain->setEvent(index, -1);
         processor.at(index)->Task_id = -1;
+
+        reassignTasks(task);
     }
 
     if (action == 1)   // job start
