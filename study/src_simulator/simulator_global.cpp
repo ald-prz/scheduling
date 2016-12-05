@@ -158,10 +158,19 @@ bool SimulatorGlobal::processNextEvent(int event)
 
     if (action == 1)   // job start
     {
-        if (chain->getEvent(processor.size() + index * 3 + 0) < chain->getEvent(processor.size() + index * 3 + 2))
+        if (chain->getEvent(processor.size() + index * 3 + 0) < chain->getEvent(processor.size() + index * 3 + 2)) // if there is no way to make it in time
         {
             is_schedulable = false;
             return true;
+        }
+
+        if (chain->getEvent(processor.size() + index * 3 + 0) == chain->getEvent(processor.size() + index * 3 + 2)) // if new job starts right at deadline of the previous
+        {
+            if (task.at(index)->Left > 0)
+            {
+                is_schedulable = false;
+                return true;
+            }
         }
 
         task.at(index)->Left = task.at(index)->getWcet();
