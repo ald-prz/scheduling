@@ -73,3 +73,11 @@ Thumbs.db
 *.dll
 *.exe
 
+./generator/generator
+./simulator/simulator
+./study/study
+
+./simDM
+./studyDM
+./taskGenerator
+
