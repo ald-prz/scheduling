@@ -15,7 +15,7 @@ CXX           = g++
 DEFINES       = 
 CFLAGS        = -pipe -O2 -march=x86-64 -mtune=generic -O2 -pipe -Wall -W -fPIC $(DEFINES)
 CXXFLAGS      = -pipe -O2 -march=x86-64 -mtune=generic -O2 -pipe -std=gnu++11 -Wall -W -fPIC $(DEFINES)
-INCPATH       = 
+INCPATH       = -I.
 QMAKE         = /usr/bin/qmake
 DEL_FILE      = rm -f
 CHK_DIR_EXISTS= test -d
@@ -34,7 +34,7 @@ TAR           = tar -cf
 COMPRESS      = gzip -9f
 LINK          = g++
 LFLAGS        = -Wl,-O1 -Wl,-O1,--sort-common,--as-needed,-z,relro
-LIBS          =  
+LIBS          = 
 AR            = ar cqs
 RANLIB        = 
 SED           = sed
