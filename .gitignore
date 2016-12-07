@@ -23,7 +23,7 @@ tags
 .DS_Store
 .directory
 *.debug
-Makefile*
+#Makefile*
 *.prl
 *.app
 moc_*.cpp
@@ -73,11 +73,11 @@ Thumbs.db
 *.dll
 *.exe
 
-./generator/generator
-./simulator/simulator
-./study/study
+generator/generator
+simulator/simulator
+study/study
 
-./simDM
-./studyDM
-./taskGenerator
+simDM
+studyDM
+taskGenerator
 
